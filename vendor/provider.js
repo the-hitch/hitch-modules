@@ -13,7 +13,7 @@ module.exports = function(ResourceProvider) {
 		        id: '@id',
 		        slug: '@slug'
 		    }, {
-		        Vendor: ['User', 'Message', require('./factory.js')(this.extend)]
+		        Vendor: ['User', 'Message', 'Account', require('./factory.js')(this.extend)]
 		    }, {
 		    	query: {
 		    		method: 'get',
