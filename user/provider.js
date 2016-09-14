@@ -9,11 +9,18 @@ module.exports = function(ResourceProvider) {
 		},
 
 		$get: function(Resource) {
-		    return Resource('user/:id', {
+		    return Resource('user/:id/:action', {
 		        id: '@id',
 		    }, {
 		        User: ['Vendor', require('./factory.js')(this.extend)]
-		    }, {});
+		    }, {
+		    	resetPassword: {
+		    		method: 'POST',
+		    		params: {
+		    			action: 'resetPassword'
+		    		}
+		    	}
+		    });
 		}
 
 	}

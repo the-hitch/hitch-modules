@@ -1,7 +1,7 @@
 module.exports = function(extend) {
 	var moment = require('moment');
 
-	return function(Vendor) {
+	var user = function(Vendor) {
 
 		if (extend) {
 			angular.extend(this, extend(this))	
@@ -23,4 +23,6 @@ module.exports = function(extend) {
 
 		return this;
 	}
+
+	return user;
 }

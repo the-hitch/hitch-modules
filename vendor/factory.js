@@ -37,16 +37,16 @@ module.exports = function(extend) {
 		if (this.analytics) {
 			this.analytics = (function(analytics) {
 
-				analytics.thisMonth = {
+				analytics.total = {
 					sessions: 0,
 					views: 0,
 					leads: 0,
 				}
 
 				for (var i = analytics.length - 1; i >= 0; i--) {
-					analytics.thisMonth.sessions += analytics[i].sessions || 0;
-					analytics.thisMonth.views += analytics[i].views || 0;
-					analytics.thisMonth.leads += analytics[i].leads || 0;
+					analytics.total.sessions += analytics[i].sessions || 0;
+					analytics.total.views += analytics[i].views || 0;
+					analytics.total.leads += analytics[i].leads || 0;
 				}
 
 				return analytics;

@@ -1,4 +1,5 @@
 angular.module('vendor', [
+	'analytics',
 	'hgResource',
 	'user',
 	'message',
