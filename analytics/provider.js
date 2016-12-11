@@ -9,9 +9,7 @@ module.exports = function(ResourceProvider) {
 		},
 
 		$get: function(Resource) {
-		    return Resource('analytics', {}, {
-		        Analytics: [require('./factory.js')(this.extend)]
-		    }, {});
+		    return Resource('analytics', {}, require('./factory.js')(this.extend));
 		}
 
 	}

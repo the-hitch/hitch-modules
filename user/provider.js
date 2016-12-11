@@ -8,12 +8,10 @@ module.exports = function(ResourceProvider) {
 			this.extend = extend;
 		},
 
-		$get: function(Resource) {
-		    return Resource('user/:id/:action', {
+		$get: function(Resource, $cookies, $q, $rootScope) {
+		    var resource = Resource('user/:id/:action', {
 		        id: '@id',
-		    }, {
-		        User: ['Vendor', require('./factory.js')(this.extend)]
-		    }, {
+		    }, require('./factory.js')(this.extend), {
 		    	resetPassword: {
 		    		method: 'POST',
 		    		params: {
@@ -21,7 +19,24 @@ module.exports = function(ResourceProvider) {
 		    		}
 		    	}
 		    });
-		}
 
+		    resource.current = function() {
+                var deferred = $q.defer();
+
+		    	if ($cookies.has('token')) {
+		    		return resource.get({id: "me"}, function(user) {
+		    			$rootScope.user = user;
+		    		}).$promise;
+		    	} else {
+		    		$rootScope.user = null;
+
+		    		deferred.reject(null);
+		    	}
+
+		    	return deferred.promise;
+		    }
+
+		    return resource;
+		}
 	}
 }

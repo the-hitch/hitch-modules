@@ -1,9 +1,12 @@
 angular.module('vendor', [
+	'account',
+	'amenity',
 	'analytics',
 	'hgResource',
-	'user',
+	'image',
 	'message',
-	'account'
+	'product',
+	'user',
 ])
 
 .provider('Vendor', ['ResourceProvider', require('./provider')])

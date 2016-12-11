@@ -11,9 +11,7 @@ module.exports = function(ResourceProvider) {
 		$get: function(Resource) {
 		    return Resource('payment/:id', {
 		        id: '@id',
-		    }, {
-		        Payment: [require('./factory.js')(this.extend)]
-		    }, {});
+		    }, require('./factory.js')(this.extend));
 		}
 
 	}

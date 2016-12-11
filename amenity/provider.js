@@ -9,10 +9,9 @@ module.exports = function(ResourceProvider) {
 		},
 
 		$get: function(Resource) {
-		    return Resource('message/:id', {
+		    return Resource('amenity/:id', {
 		        id: '@id',
 		    }, require('./factory.js')(this.extend));
 		}
-
 	}
 }

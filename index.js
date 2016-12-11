@@ -1,9 +1,13 @@
-'use strict'
-
 require('hungry-resource');
+require('cookies');
 require('./account');
+require('./amenity');
 require('./analytics');
+require('./authenticate');
+require('./image');
 require('./message');
 require('./payment');
+require('./product');
+require('./sortable');
 require('./user');
 require('./vendor');

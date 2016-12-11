@@ -1,34 +1,54 @@
 module.exports = function(extend) {
 	var moment = require('moment');
 
-	var Vendor = function(User, Message, Account) {
-
-		if (extend) {
-			angular.extend(this, extend(this))	
-		}
+	var Vendor = function(Account, Amenity, Image, Message, Product, User, Vendor) {
 
 		this.created_at = new moment(this.created_at);
 
-		this.address = (function(address) {
-			return {
-				id: address.id,
-				street: address.street,
-				postal_code: address.postal_code,
-				city: {
-					id: address.city.data.id,
-					title: address.city.data.title,
-					slug: address.city.data.slug,
-					region: {
-						id: address.city.data.region.data.id,
-						title: address.city.data.region.data.title,
-						slug: address.city.data.region.data.slug,
-						abbr: address.city.data.region.data.abbr,
+		if (this.nearby) {
+			this.nearby = this.nearby.data.map(function(vendor) {
+				return new Vendor(vendor);
+			})
+		}
+
+		if (this.amenities) {
+			this.amenities = this.amenities.data.map(function(amenity) {
+				return new Amenity(amenity);
+			})			
+		}
+
+		if (this.products) {
+			this.products = this.products.data.map(function(product) {
+				return new Product(product);
+			})			
+		}
+
+		if (this.address) {
+			this.address = (function(address) {
+				return {
+					id: address.id,
+					street: address.street,
+					postal_code: address.postal_code,
+					latitude: address.latitude,
+					longitude: address.longitude,
+					city: {
+						id: address.city.data.id,
+						title: address.city.data.title,
+						slug: address.city.data.slug,
+						region: {
+							id: address.city.data.region.data.id,
+							title: address.city.data.region.data.title,
+							slug: address.city.data.region.data.slug,
+							abbr: address.city.data.region.data.abbr,
+						}
 					}
 				}
-			}
-		})(this.address.data);
+			})(this.address.data);
+		}
 
-		this.meta = this.meta.data;
+		if (this.meta) {
+			this.meta = this.meta.data;
+		}
 
 		if (this.account) {
 			this.account = new Account(this.account.data);
@@ -53,12 +73,28 @@ module.exports = function(extend) {
 			})(this.analytics.data);
 		}
 
+		if (this.images) {
+			this.images = this.images.data.map(function(image) {
+				return new Image(image);
+			});
+		} else {
+			this.images = [];
+		}
+
 		if (this.messages) {
 			this.messages = (function(messages) {
 				return messages.map(function(message) {
 					return new Message(message);
 				});
 			})(this.messages.data);
+		}
+
+		this.contact = function() {
+			console.log('contact')
+		}
+
+		if (extend) {
+			angular.extend(this, extend(this))	
 		}
 
 		return this;
