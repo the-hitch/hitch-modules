@@ -9,18 +9,26 @@ module.exports = function(extend) {
 			$filter('currency')(product.cost_low)
 
 			if (product.cost === null) {
-				if (product.unit == "%") {
-					str += product.costl_low + "%";
+				if (product.cost_low == product.cost_high) {
+					if (product.unit == "%") {
+						str += product.cost_low + "%";
+					} else {
+						str += $filter('currency')(product.cost_low, "$", 0);
+					}
 				} else {
-					str += $filter('currency')(product.cost_low, "$", 0);
-				}
+					if (product.unit == "%") {
+						str += product.costl_low + "%";
+					} else {
+						str += $filter('currency')(product.cost_low, "$", 0);
+					}
 
-				str += " - ";
+					str += " - ";
 
-				if (product.unit == "%") {
-					str += product.cost_high + "%";
-				} else {
-					str += $filter('currency')(product.cost_low, "$", 0);
+					if (product.unit == "%") {
+						str += product.cost_high + "%";
+					} else {
+						str += $filter('currency')(product.cost_high, "$", 0);
+					}
 				}
 			} else {
 				if (product.unit == "%") {

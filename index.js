@@ -8,6 +8,7 @@ require('./image');
 require('./message');
 require('./payment');
 require('./product');
+require('./region');
 require('./sortable');
 require('./user');
 require('./vendor');
