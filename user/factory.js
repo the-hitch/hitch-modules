@@ -7,11 +7,15 @@ module.exports = function(extend) {
 			angular.extend(this, extend(this))	
 		}
 
-		if (this.vendors) {
-			this.vendors = this.vendors.data;
+		if (this.favorites) {
+			this.favorites = this.favorites.data.map(function(favorite) {
+				return new Vendor(favorite);
+			});
+		}
 
-			this.vendors.map(function(vendor) {
-				vendor = new Vendor(vendor);
+		if (this.vendors) {
+			this.vendors = this.vendors.data.map(function(vendor) {
+				return new Vendor(vendor);
 			});
 		}
 

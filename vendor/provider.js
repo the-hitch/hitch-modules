@@ -11,7 +11,6 @@ module.exports = function(ResourceProvider) {
 		$get: function(Resource) {
 		    return Resource('vendor/:id/:region/:city/:slug/', {
 		        id: '@id',
-		        slug: '@slug',
 		    }, require('./factory.js')(this.extend), {
 		    	query: {
 		    		method: 'get',

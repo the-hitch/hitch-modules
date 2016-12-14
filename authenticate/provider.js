@@ -21,7 +21,7 @@ module.exports = function($injector) {
 
         interceptors: interceptors,
 
-        $get: function($q, $cookies, $http, $state, $rootScope, $location, Resource, User) {
+        $get: function(config, $q, $cookies, $http, $state, $rootScope, $location, Resource, User) {
 
             var refreshPath = "authenticate/refresh";
 
@@ -37,7 +37,7 @@ module.exports = function($injector) {
 	                        email: data.email,
 	                        password: data.password,
 	                    },
-	                    url: process.env.api.host + 'authenticate'
+	                    url: config.api.host + 'authenticate'
 	                })
                     .then(function(response) {
                         $cookies.set('token', response.data.token, 'Infinity');
@@ -62,7 +62,7 @@ module.exports = function($injector) {
                             email: data.email,
                             password: data.password,
                         },
-                        url: process.env.api.host + 'signup'
+                        url: config.api.host + 'signup'
                     }).then(function(response) {
                         $cookies.set('token', response.data.token, 'Infinity');
 
@@ -87,9 +87,8 @@ module.exports = function($injector) {
 
                     $http({
                         method: 'POST',
-                        url: Resource.apiUrl + refreshPath
+                        url: config.api.host + refreshPath
                     }).then(function(response) {
-                        console.log(response)
                         if (response.status == 200) {
                             $cookies.set('token', response.data.token, 'Infinity');
                             deferred.resolve();

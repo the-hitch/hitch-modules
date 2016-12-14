@@ -1,7 +1,7 @@
 module.exports = function(extend) {
 	var moment = require('moment');
 
-	var Vendor = function(Account, Amenity, Image, Message, Product, User, Vendor) {
+	var Vendor = function(Account, Amenity, Image, Message, Product, User, Vendor, signup) {
 
 		this.created_at = new moment(this.created_at);
 
@@ -47,7 +47,9 @@ module.exports = function(extend) {
 		}
 
 		if (this.meta) {
-			this.meta = this.meta.data;
+			
+			this.capacity = this.meta.data.capacity || null;
+
 		}
 
 		if (this.account) {
@@ -89,8 +91,52 @@ module.exports = function(extend) {
 			})(this.messages.data);
 		}
 
+		this.toggleFavorite = function() {
+			if (this.favorited) {
+				this.unfavorite();
+			} else {
+				this.favorite();
+			}
+		}
+
+		this.favorite = function() {
+			var vendor = this;
+
+			this.favorited = true;
+
+			User.current().then(function(user) {
+				user.favorites.push(vendor)
+			});
+
+			angular.copy(this).$update();
+		}
+
+		this.unfavorite = function() {
+			var vendor = this;
+
+			this.favorited = false;
+
+			User.current().then(function(user) {
+				user.favorites = user.favorites.filter(function(favorite) {
+					return (favorite.id != vendor.id);
+				})
+			})
+			
+			angular.copy(this).$update();
+		}
+
 		this.contact = function() {
-			console.log('contact')
+			var vendor = this;
+			
+			var contact = function() {
+				vendor.contacted = true;
+
+				angular.copy(vendor).$update();				
+			}
+
+			User.current().then(contact, function() {
+				signup.open().then(contact);
+			});
 		}
 
 		if (extend) {
@@ -100,16 +146,12 @@ module.exports = function(extend) {
 		return this;
 	}
 
-	Vendor.prototype.transform = function(config) {
+	Vendor.prototype.transform = function($q) {
+		var config = this;
 		var vendor = config.data;
+        var deferred = $q.defer();
 
-		var $injector = angular.injector([
-			'ng',
-		]);
-
-        var deferred = $injector.get('$q').defer();
-
-		if (vendor.account.payment.cvv) {
+		if (vendor.account && vendor.account.payment.cvv) {
 	        Stripe.card.createToken({
 	            name: vendor.account.payment.name,
 	            number: vendor.account.payment.last_4,
@@ -117,10 +159,6 @@ module.exports = function(extend) {
 	            exp_month: vendor.account.payment.expiration.substring(0,2),
 	            exp_year: vendor.account.payment.expiration.substring(2,4)
 	        }, function(status, response) {
-	        	console.log(response);
-
-	        	vendor.fooooooooo = "barrrrrrrrrrrr";
-
                 if (status == 200) {
                 	vendor.account.payment = {
                 		provider: 'stripe',
@@ -136,9 +174,8 @@ module.exports = function(extend) {
                 }
 	        });		
 		} else {
-            deferred.resolve(config);
+			return this;
 		}
-
 
         return deferred.promise;
 	}
