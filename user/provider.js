@@ -43,6 +43,8 @@ module.exports = function(ResourceProvider) {
 		    			provider.setCurrent(user);
 
 		    			$rootScope.user = user;
+		    		}, function() {
+		    			console.log("Error fetching user");
 		    		}).$promise;
 		    	} else {
 		    		$rootScope.user = null;

@@ -1,7 +1,7 @@
 module.exports = function(extend) {
 	var moment = require('moment');
 
-	var Vendor = function(Account, Amenity, Image, Message, Product, User, Vendor, signup) {
+	var Vendor = function(Account, Amenity, Image, Message, Product, User, Vendor, signup, $injector) {
 
 		this.created_at = new moment(this.created_at);
 
@@ -106,9 +106,11 @@ module.exports = function(extend) {
 
 			User.current().then(function(user) {
 				user.favorites.push(vendor)
-			});
+			}, function() {});
 
-			angular.copy(this).$update();
+			angular.copy(this).$update({}, function(){}, function(e) {
+				console.log(e)
+			});
 		}
 
 		this.unfavorite = function() {
@@ -119,7 +121,11 @@ module.exports = function(extend) {
 			User.current().then(function(user) {
 				user.favorites = user.favorites.filter(function(favorite) {
 					return (favorite.id != vendor.id);
+				}, function() {
+
 				})
+			}, function() {
+
 			})
 			
 			angular.copy(this).$update();
@@ -140,7 +146,7 @@ module.exports = function(extend) {
 		}
 
 		if (extend) {
-			angular.extend(this, extend(this))	
+			angular.extend(this, $injector.invoke(extend, this));	
 		}
 
 		return this;

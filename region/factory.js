@@ -4,9 +4,13 @@ module.exports = function(extend) {
 	return function(Vendor) {
 
 		if (this.vendors) {
+			var total = this.vendors.total;
+
 			this.vendors = this.vendors.data.map(function(vendor) {
 				return new Vendor(vendor);
-			})
+			});
+
+			this.vendors.total = total;
 		}
 
 		if (extend) {

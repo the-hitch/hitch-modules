@@ -98,6 +98,43 @@ module.exports = function($injector) {
                     })
 
                     return deferred.promise;
+                },
+
+                forgot: function(data) {
+                    var deferred = $q.defer();
+
+                    $http({
+                        method: 'POST',
+                        data: {
+                            email: data.email,
+                        },
+                        url: config.api.host + "forgot"
+                    }).then(function(response) {
+                        deferred.resolve();
+                    }, function() {
+                        deferred.reject();                        
+                    })
+
+                    return deferred.promise;
+                },
+
+                reset: function(data) {
+                    var deferred = $q.defer();
+
+                    $http({
+                        method: 'POST',
+                        data: {
+                            remember_token: data.remember_token,
+                            password: data.password
+                        },
+                        url: config.api.host + "reset"
+                    }).then(function(response) {
+                        deferred.resolve();
+                    }, function() {
+                        deferred.reject();
+                    })
+
+                    return deferred.promise;
                 }
         	}
         }
