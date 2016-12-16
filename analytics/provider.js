@@ -4,12 +4,12 @@ module.exports = function(ResourceProvider) {
 
 		setHost: ResourceProvider.setApiUrl,
 
-		extend: function(extend) {
-			this.extend = extend;
+		decorate: function(decorator) {
+			this.decorator = decorator;
 		},
 
 		$get: function(Resource) {
-		    return Resource('analytics', {}, require('./factory.js')(this.extend));
+		    return Resource('analytics', {}, require('./factory.js')(this.decorator));
 		}
 
 	}

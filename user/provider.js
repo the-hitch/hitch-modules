@@ -4,8 +4,8 @@ module.exports = function(ResourceProvider) {
 
 		setHost: ResourceProvider.setApiUrl,
 
-		extend: function(extend) {
-			this.extend = extend;
+		decorate: function(decorator) {
+			this.decorator = decorator;
 		},
 
 		setCurrent: function(user) {
@@ -21,7 +21,7 @@ module.exports = function(ResourceProvider) {
 
 		    var resource = Resource('user/:id/:action', {
 		        id: '@id',
-		    }, require('./factory.js')(this.extend), {
+		    }, require('./factory.js')(this.decorator), {
 		    	resetPassword: {
 		    		method: 'POST',
 		    		params: {
@@ -43,8 +43,8 @@ module.exports = function(ResourceProvider) {
 		    			provider.setCurrent(user);
 
 		    			$rootScope.user = user;
-		    		}, function() {
-		    			console.log("Error fetching user");
+		    		}, function(e) {
+		    			console.log("Error: ", e);
 		    		}).$promise;
 		    	} else {
 		    		$rootScope.user = null;

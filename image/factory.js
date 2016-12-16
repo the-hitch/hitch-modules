@@ -1,12 +1,12 @@
-module.exports = function(extend) {
+module.exports = function(decorator) {
 	var moment = require('moment');
 
-	return function() {
+	return function($injector) {
 
 		this.url = this.host + this.path;
 
-		if (extend) {
-			angular.extend(this, extend(this))	
+		if (decorator) {
+			angular.extend(this, $injector.invoke(decorator, this));	
 		}
 
 		return this;

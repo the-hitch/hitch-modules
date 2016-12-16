@@ -1,8 +1,7 @@
-module.exports = function(extend) {
+module.exports = function(decorator) {
 	var moment = require('moment');
 
-	var Vendor = function(Account, Amenity, Image, Message, Product, User, Vendor, signup, $injector) {
-
+	var vendor = function(Account, Amenity, Image, Message, Product, User, Vendor, $injector) {
 		this.created_at = new moment(this.created_at);
 
 		if (this.nearby) {
@@ -20,7 +19,7 @@ module.exports = function(extend) {
 		if (this.products) {
 			this.products = this.products.data.map(function(product) {
 				return new Product(product);
-			})			
+			})
 		}
 
 		if (this.address) {
@@ -91,100 +90,18 @@ module.exports = function(extend) {
 			})(this.messages.data);
 		}
 
-		this.toggleFavorite = function() {
-			if (this.favorited) {
-				this.unfavorite();
-			} else {
-				this.favorite();
-			}
+		if (decorator) {
+			$injector.invoke(decorator, this);
 		}
-
-		this.favorite = function() {
-			var vendor = this;
-
-			this.favorited = true;
-
-			User.current().then(function(user) {
-				user.favorites.push(vendor)
-			}, function() {});
-
-			angular.copy(this).$update({}, function(){}, function(e) {
-				console.log(e)
-			});
-		}
-
-		this.unfavorite = function() {
-			var vendor = this;
-
-			this.favorited = false;
-
-			User.current().then(function(user) {
-				user.favorites = user.favorites.filter(function(favorite) {
-					return (favorite.id != vendor.id);
-				}, function() {
-
-				})
-			}, function() {
-
-			})
-			
-			angular.copy(this).$update();
-		}
-
-		this.contact = function() {
-			var vendor = this;
-			
-			var contact = function() {
-				vendor.contacted = true;
-
-				angular.copy(vendor).$update();				
-			}
-
-			User.current().then(contact, function() {
-				signup.open().then(contact);
-			});
-		}
-
-		if (extend) {
-			angular.extend(this, $injector.invoke(extend, this));	
-		}
-
-		return this;
 	}
 
-	Vendor.prototype.transform = function($q) {
-		var config = this;
-		var vendor = config.data;
-        var deferred = $q.defer();
+	vendor.prototype.transform = function($injector) {
+		delete this.data.created_at;
 
-		if (vendor.account && vendor.account.payment.cvv) {
-	        Stripe.card.createToken({
-	            name: vendor.account.payment.name,
-	            number: vendor.account.payment.last_4,
-	            cvc: vendor.account.payment.cvv,
-	            exp_month: vendor.account.payment.expiration.substring(0,2),
-	            exp_year: vendor.account.payment.expiration.substring(2,4)
-	        }, function(status, response) {
-                if (status == 200) {
-                	vendor.account.payment = {
-                		provider: 'stripe',
-                		token: response.id,
-                		last_4: response.card.last4,
-                		type: response.card.type,
-                		name: response.card.name,
-                	}
-
-                    deferred.resolve(config);
-                } else {
-                	
-                }
-	        });		
-		} else {
-			return this;
+		if (decorator && decorator.prototype.transform) {
+			return $injector.invoke(decorator.prototype.transform, this);
 		}
-
-        return deferred.promise;
 	}
 
-	return Vendor;
+	return vendor;
 }

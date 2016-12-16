@@ -9,4 +9,4 @@ angular.module('vendor', [
 	'user',
 ])
 
-.provider('Vendor', ['ResourceProvider', require('./provider')])
+.provider('Vendor', require('./provider'))

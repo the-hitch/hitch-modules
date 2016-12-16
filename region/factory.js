@@ -1,7 +1,7 @@
-module.exports = function(extend) {
+module.exports = function(decorator) {
 	var moment = require('moment');
-
-	return function(Vendor) {
+	
+	return function(Vendor, $injector) {
 
 		if (this.vendors) {
 			var total = this.vendors.total;
@@ -13,8 +13,8 @@ module.exports = function(extend) {
 			this.vendors.total = total;
 		}
 
-		if (extend) {
-			angular.extend(this, extend(this))	
+		if (decorator) {
+			angular.extend(this, $injector.invoke(decorator, this));	
 		}
 
 		return this;

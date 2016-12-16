@@ -4,20 +4,22 @@ module.exports = function(ResourceProvider) {
 
 		setHost: ResourceProvider.setApiUrl,
 
-		extend: function(extend) {
-			this.extend = extend;
+		decorate: function(decorator) {
+			this.decorator = decorator;
 		},
 
 		$get: function(Resource) {
-		    return Resource('vendor/:id/:region/:city/:slug/', {
+		    var resource = Resource('vendor/:id/:region/:city/:slug/', {
 		        id: '@id',
-		    }, require('./factory.js')(this.extend), {
+		    }, require('./factory.js')(this.decorator), {
 		    	query: {
 		    		method: 'get',
 		    		isArray: true,
 		    		cancellable: true
 		    	}
 		    });
+
+		    return resource;
 		}
 
 	}

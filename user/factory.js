@@ -1,11 +1,7 @@
-module.exports = function(extend) {
-	var moment = require('moment');
+module.exports = function(decorator) {
 
-	var user = function(Vendor) {
-
-		if (extend) {
-			angular.extend(this, extend(this))	
-		}
+	return function(Vendor) {
+		var moment = require('moment');
 
 		if (this.favorites) {
 			this.favorites = this.favorites.data.map(function(favorite) {
@@ -25,8 +21,10 @@ module.exports = function(extend) {
 
 		this.created_at = new moment(this.created_at);
 
+		if (decorator) {
+			angular.extend(this, $injector.invoke(decorator, this));	
+		}
+
 		return this;
 	}
-
-	return user;
 }
