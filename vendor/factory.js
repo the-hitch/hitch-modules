@@ -93,6 +93,8 @@ module.exports = function(decorator) {
 		if (decorator) {
 			$injector.invoke(decorator, this);
 		}
+
+		return this;
 	}
 
 	vendor.prototype.transform = function($injector) {
