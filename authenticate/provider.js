@@ -46,7 +46,7 @@ module.exports = function($injector) {
 
                         deferred.resolve();                        
 	                }, function(response) {
-                        deferred.reject(response);                            
+                        deferred.reject(response.data);                            
                     });
 
                     return deferred.promise;
