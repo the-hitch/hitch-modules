@@ -9,7 +9,7 @@ module.exports = function(ResourceProvider) {
 		},
 
 		$get: function(Resource) {
-		    return Resource('media/:id', {
+		    return Resource('post/:id', {
 		        id: '@id',
 		    }, require('./factory.js')(this.decorator));
 		}

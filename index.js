@@ -9,6 +9,7 @@ require('./image');
 require('./link');
 require('./message');
 require('./payment');
+require('./post');
 require('./product');
 require('./region');
 require('./sortable');
