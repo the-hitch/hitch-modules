@@ -1,10 +1,13 @@
-module.exports = function(extend) {
+module.exports = function(decorator) {
 	var moment = require('moment');
+	var notify = require('hungry-notify');
 
-	return function() {
+	return function($injector) {
 
-		if (extend) {
-			angular.extend(this, extend(this))	
+		this.notify = new notify();
+
+		if (decorator) {
+			$injector.invoke(decorator, this);
 		}
 
 		return this;

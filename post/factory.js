@@ -24,9 +24,9 @@ module.exports = function() {
 	post.prototype.transform = function() {
 		console.log(this);
 
-		if (this.data.published) {
+		if (this.data.published && this.data.published_at == null) {
 			this.data.published_at = new moment();
-		} else {
+		} else if ( ! this.data.published) {
 			this.data.published_at = null;
 		}
 	}
