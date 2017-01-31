@@ -1,0 +1,45 @@
+<div class="modal ng-scope current" fix-scroller>
+    <div class="modal__backdrop" ng-click="close()"></div>
+    <div class="modal__dialog">
+
+        <div class="modal__content" ng-class="{'error': error}">
+            <loading class="loader" ng-if="loading"></loading>
+            <i ng-click="close()" class="icon icon--delete"></i>
+    
+            <div class="modal__header">
+                <div class="mobile__header mobile__header--chromeless">
+                    <a href="#" class="btn btn--cancel btn--transparent" ng-click="close()">Close</a>
+                    <div class="mobile__header__title">Sign In</div>
+                    <a href="#" ng-click="submit()" class="btn btn--continue btn--transparent text--bluegreen">Sign In</a>
+                </div>
+            </div>
+
+            <div class="modal__body">
+                <p class="modal__body__message" ng-class="{'error': error}" ng-bind-html="error"></p>
+                <form ng-submit="submit()" name="form" analytics-on analytics-event="Click" analytics-category="Consumer" analytics-label="Sign In Email" novalidate>
+                    <label>Email Address</label>
+                    <div ng-if="form.$submitted" ng-messages="form.email.$error" role="alert">
+                        <label ng-message="required">Valid Email Address required</label>
+                    </div>
+                    <input type="email" name="email" class="form-control" ng-model="user.email" required tabindex="5" required>
+                    <label>Password</label>
+                    <div ng-if="form.$submitted" ng-messages="form.password.$error" role="alert">
+                        <label ng-message="required">Password is required</label>
+                    </div>
+                    <input type="password" name="password" class="form-control" ng-model="user.password" required tabindex="6" required>
+                    <div class="modal-body__meta">
+                        <span>Not a Member? <a ng-click="openSignup()">Sign up today!</a></span>
+                        <span class="fr"><a ng-click="openForgot()">Forgot Details?</a></span>
+                    </div>
+                    <button type="submit" value="Sign In" tabindex="7" class="btn btn--black btn--full btn--large submit hidden--mini">Sign In</button>
+                </form>
+<!--                 <div class="social-login">
+                    <p class="text--center"><small class="social-login__header">or Log In With</small></p>
+                    <div class="container">
+                        <a class="btn btn--full btn--outline-dark btn--icon btn--facebook" ng-click="facebook()"><i class="icon icon--facebook" analytics-on analytics-event="Click" analytics-category="Consumer" analytics-label="Sign In Social"></i>Facebook</a>
+                    </div>
+                </div>
+ -->            </div>
+        </div>
+    </div>
+</div>

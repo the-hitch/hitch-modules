@@ -1,0 +1,34 @@
+<div class="modal ng-scope current" fix-scroller>
+    <div class="modal__backdrop" ng-click="close()"></div>
+    <div class="modal__dialog">
+        <div class="modal__content" ng-class="{'error': error}">
+            <loading class="loader" ng-if="loading"></loading>
+            <i ng-click="close()" class="icon icon--delete"></i>
+            <div class="modal__header">
+                <div class="mobile__header mobile__header--chromeless">
+                    <a href="#" class="btn btn--cancel btn--transparent" ng-click="close($event)">Close</a>
+                    <div class="mobile__header__title">Reset Password</div>
+                    <a href="#" ng-click="submit()" class="btn btn--continue btn--transparent text--bluegreen">Submit</a>
+                </div>
+            </div>
+         
+            <div class="modal__body" ng-if="!success">
+                <p class="modal__body__message">Start by entering your email address below.</p>
+
+                <p class="modal__body__message" ng-class="{'error': error}" ng-bind-html="message"></p>
+                <form ng-submit="submit()" name="form" novalidate>
+                    <label>Email</label>
+                    <input type="email" name="email" class="form-control" ng-model="user.email" required>
+                    <div class="double actions hidden--mini">
+                        <button tabindex="7" class="btn btn--black btn--full btn--large submit">Submit</button>
+                        <a class="btn btn--full btn--large btn--outline-dark btn-default cancel form-control" ng-click="close($event)">Cancel</a>
+                    </div>
+                </form>
+            </div>
+            <div class="modal__body" ng-if="success">
+                <p class="modal__body__message">Perfect! We're sending you an email with instructions to change your password.</p>
+                <a class="btn btn--full btn--large btn--outline-dark btn-default cancel form-control" ng-click="close($event)">Ok, Got it!</a>
+            </div>
+        </div>
+    </div>
+</div>

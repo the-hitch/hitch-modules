@@ -8,12 +8,16 @@ module.exports = function(ResourceProvider) {
 			this.decorator = decorator;
 		},
 
-		setCurrent: function(user) {
-			this.user = user;
+		setCurrent: function(user, include) {
+			this.user = this.user || {};
+			
+			this.user[include] = user;
 		},
 
-		getCurrent: function() {
-			return this.user;
+		getCurrent: function(include) {
+			this.user = this.user || {};
+
+			return this.user[include];
 		},
 
 		$get: function(Resource, $cookies, $q, $rootScope) {
@@ -30,17 +34,17 @@ module.exports = function(ResourceProvider) {
 		    	}
 		    });
 
-		    resource.current = function() {
+		    resource.current = function(include) {
                 var deferred = $q.defer();
 
-                if (provider.getCurrent()) {
-		    		deferred.resolve(provider.getCurrent());
+                if (provider.getCurrent(include)) {
+		    		deferred.resolve(provider.getCurrent(include));
 		    	} else if ($cookies.has('token')) {
 		    		return resource.get({
 		    			id: "me",
-		    			include: "favorites"
+		    			include: include
 		    		}, function(user) {
-		    			provider.setCurrent(user);
+		    			provider.setCurrent(user, include);
 
 		    			$rootScope.user = user;
 		    		}, function(e) {

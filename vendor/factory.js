@@ -1,7 +1,7 @@
 module.exports = function(decorator) {
 	var moment = require('moment');
 
-	var vendor = function(Account, Amenity, Image, Message, Product, Link, User, Vendor, Faq, $injector) {
+	var vendor = function(Account, Amenity, Image, Message, Product, Region, Link, User, Vendor, Faq, $injector) {
 		this.created_at = new moment(this.created_at);
 
 		if (this.nearby) {
@@ -20,18 +20,26 @@ module.exports = function(decorator) {
 			this.products = this.products.data.map(function(product) {
 				return new Product(product);
 			})
+		} else {
+			this.products = [];
 		}
+
+		this.vendors = [];
 
 		if (this.faqs) {
 			this.faqs = this.faqs.data.map(function(faq) {
 				return new Faq(faq);
 			})
+		} else {
+			this.faqs = [];
 		}
 
 		if (this.links) {
 			this.links = this.links.data.map(function(link) {
 				return new Link(link);
 			})
+		} else {
+			this.links = [];
 		}
 
 		if (this.address) {
@@ -46,21 +54,14 @@ module.exports = function(decorator) {
 						id: address.city.data.id,
 						title: address.city.data.title,
 						slug: address.city.data.slug,
-						region: {
-							id: address.city.data.region.data.id,
-							title: address.city.data.region.data.title,
-							slug: address.city.data.region.data.slug,
-							abbr: address.city.data.region.data.abbr,
-						}
+						region: new Region(address.city.data.region.data)
 					}
 				}
 			})(this.address.data);
 		}
 
 		if (this.meta) {
-			
 			this.capacity = this.meta.data.capacity || null;
-
 		}
 
 		if (this.account) {
@@ -87,9 +88,13 @@ module.exports = function(decorator) {
 		}
 
 		if (this.images) {
+			var total = this.images.total;
+
 			this.images = this.images.data.map(function(image) {
 				return new Image(image);
 			});
+
+			this.images.total = total;
 		} else {
 			this.images = [];
 		}
@@ -101,6 +106,8 @@ module.exports = function(decorator) {
 				});
 			})(this.messages.data);
 		}
+
+		delete this.meta;
 
 		if (decorator) {
 			$injector.invoke(decorator, this);

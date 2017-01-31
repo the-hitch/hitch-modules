@@ -1,0 +1,46 @@
+<div class="modal ng-scope current" fix-scroller>
+    <div class="modal__backdrop" ng-click="close()"></div>
+    <div class="modal__dialog">
+        <div class="modal__content" ng-class="{'error': error}">
+            <loading class="loader" ng-if="loading"></loading>
+            <i ng-click="close()" class="icon icon--delete"></i>
+            <div class="modal__header">
+                <div class="mobile__header mobile__header--chromeless">
+                    <a href="#" class="btn btn--cancel btn--transparent" ng-click="close($event)">Close</a>
+                    <div class="mobile__header__title">Sign Up</div>
+                    <a href="#" ng-click="signup()" class="btn btn--continue btn--transparent text--bluegreen">Sign Up</a>
+                </div>
+            </div>
+            <div class="modal__body">
+                <p class="modal__body__message" ng-class="{'error': error}" ng-bind-html="error"></p>
+                <form name="form" ng-submit="submit()" novalidate analytics-on analytics-event="Submit" analytics-category="Consumer" analytics-label="Sign Up Email">
+                    <label>Name</label>
+                    <div ng-if="form.$submitted" ng-messages="form.name.$error" role="alert">
+                        <label ng-message="required">Your Name is required</label>
+                    </div>
+                    <input type="text" class="form-control" name="name" id="name" ng-model="user.name" ng-pattern="/^[ \u00c0-\u01ffa-zA-Z'\-]+$/" required>
+                    <label>Email Address</label>
+                    <div ng-if="form.$submitted" ng-messages="form.email.$error" role="alert">
+                        <label ng-message="required">Valid Email Address is required</label>
+                    </div>
+                    <input type="email" name="email" ng-class="{'error': emailError}" class="form-control" ng-model="user.email" required>
+                    <label>Password</label>
+                    <div ng-if="form.$submitted" ng-messages="form.password.$error" role="alert">
+                        <label ng-message="required">Password is required</label>
+                    </div>
+                    <input type="password" name="password" class="form-control" ng-model="user.password" required>
+                    <div class="modal-body__meta">
+                        <span>Already a Member? <a ng-click="openSignin()">Sign In!</a></span>
+                    </div>
+                    <button type="submit" ng-disabled="signup.$invalid" value="Sign Up" class="btn btn--black btn--full btn--large submit hidden--mini">Sign Up</button>
+                </form>
+<!--                 <div class="social-login">
+                    <p class="text--center"><small class="social-login__header">or Log In With</small></p>
+                    <div class="container">
+                        <a class="btn btn--full btn--outline-dark btn--icon btn--facebook" ng-click="facebook()"  analytics-on analytics-event="Click" analytics-category="Consumer" analytics-label="Sign Up Social"><i class="icon icon--facebook"></i>Facebook</a>
+                    </div>
+                </div>
+ -->            </div>
+        </div>
+    </div>
+</div>

@@ -2,9 +2,31 @@ module.exports = function(decorator) {
 	var moment = require('moment');
 	var notify = require('hungry-notify');
 
+	function getMatches(string, regex, index) {
+		index || (index = 1); // default to the first capturing group
+		var matches = [];
+		var match;
+		while (match = regex.exec(string)) {
+			matches.push(match[index]);
+		}
+		return matches;
+	}
+
 	var product = function($filter, $injector) {
 
+		this.$delete = function() {
+			var product = this;
+
+			this.notify.trigger('deleting');
+
+			this.__proto__.$delete.apply(this).then(function() {
+				product.notify.trigger('deleted', product);
+			});
+		}
+
 		this.pretty = (function(product) {
+			if (product.pretty != undefined) return product.pretty;
+
 			var str = "";
 
 			$filter('currency')(product.cost_low)
@@ -60,9 +82,38 @@ module.exports = function(decorator) {
 	}
 
 	product.prototype.transform = function($injector) {
-		if (decorator && decorator.prototype.transform) {
-			return $injector.invoke(decorator.prototype.transform, this);
+		var product = this;
+
+		var per = getMatches(product.pretty, /\/(.*)/g);
+
+		var range = getMatches(product.pretty, /([0-9,]+)/g);
+
+		product.cost = product.cost_low = product.cost_high = null;
+
+		if (range.length === 2) {
+			product.cost_low = range[0].replace(',', '');
+			product.cost_high = range[1].replace(',', '');
+		} else {
+			product.cost = range[0];
 		}
+
+		if (per.length) {
+			product.per = per[0];
+		} else {
+			product.per = 'single';
+		}
+
+		if (product.pretty.indexOf('$') > -1) {
+			product.unit = '$';
+		} else if (product.pretty.indexOf('%') > -1) {
+			product.unit = '%';
+		}
+
+		if (decorator && decorator.prototype.transform) {
+			return $injector.invoke(decorator.prototype.transform, product);
+		}
+
+		return product;
 	}
 
 	return product
