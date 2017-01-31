@@ -1,5 +1,4 @@
 module.exports = function($httpProvider) {
-    var moment = require('moment');
 
     var authHttpInterceptor = ['$q', '$injector', '$cookies', '$rootScope', '$location',
         function($q, $injector, $cookies, $rootScope, $location) {
@@ -41,30 +40,11 @@ module.exports = function($httpProvider) {
                 return deferred.promise;
             }
 
-            function urlBase64Decode(str) {
-               var output = str.replace('-', '+').replace('_', '/');
-               switch (output.length % 4) {
-                   case 0:
-                       break;
-                   case 2:
-                       output += '==';
-                       break;
-                   case 3:
-                       output += '=';
-                       break;
-                   default:
-                       throw 'Illegal base64url string!';
-               }
-               return window.atob(output);
-           }
-
             return {
                 'request': function(config) {
                     if ($cookies.has('token')) {
-                        var encoded = $cookies.get('token').split('.')[1];
-                        var jwt = JSON.parse(urlBase64Decode(encoded));
 
-                        if (new moment().unix() > jwt.exp && config.url.indexOf("/authenticate/refresh") === -1) {
+                        if ($injector.get('Authenticate').isExpired() && config.url.indexOf("/authenticate/refresh") === -1) {
                             return refreshToken().then(function() {
                                 config.headers.Authorization = "Bearer " + $cookies.get('token');
                                 return config;

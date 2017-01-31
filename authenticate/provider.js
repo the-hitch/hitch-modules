@@ -1,6 +1,6 @@
 module.exports = function($injector) {
 
-    var Moment = require('moment');
+    var moment = require('moment');
     
     var interceptors = [];
 
@@ -16,6 +16,23 @@ module.exports = function($injector) {
             }
         });    
     }
+
+    function urlBase64Decode(str) {
+       var output = str.replace('-', '+').replace('_', '/');
+       switch (output.length % 4) {
+           case 0:
+               break;
+           case 2:
+               output += '==';
+               break;
+           case 3:
+               output += '=';
+               break;
+           default:
+               throw 'Illegal base64url string!';
+       }
+       return window.atob(output);
+   }
 
     return {
 
@@ -98,6 +115,13 @@ module.exports = function($injector) {
                     })
 
                     return deferred.promise;
+                },
+
+                isExpired: function() {
+                    var encoded = $cookies.get('token').split('.')[1];
+                    var jwt = JSON.parse(urlBase64Decode(encoded));
+
+                    return (new moment().unix() > jwt.exp);
                 },
 
                 forgot: function(data) {
