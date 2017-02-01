@@ -42,6 +42,14 @@ module.exports = function(decorator) {
 			this.links = [];
 		}
 
+		if (this.downloads) {
+			this.downloads = this.downloads.data.map(function(download) {
+				return new Link(download);
+			})
+		} else {
+			this.downloads = [];
+		}
+
 		if (this.address) {
 			this.address = (function(address) {
 				return {
