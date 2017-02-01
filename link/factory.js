@@ -3,6 +3,8 @@ module.exports = function(extend) {
 
 	return function() {
 
+		this.title = this.title || '';
+
 		return this;
 	}
 }
