@@ -13,10 +13,14 @@ module.exports = function(decorator) {
 			this.vendors.total = total;
 		}
 
-		this.country = {
-			id: this.country.data.id,
-			title: this.country.data.title,
-			slug: this.country.data.slug
+		if (this.country) {
+			this.country = {
+				id: this.country.data.id,
+				title: this.country.data.title,
+				slug: this.country.data.slug
+			}
+		} else {
+			this.country = {};
 		}
 
 		if (decorator) {
