@@ -4,6 +4,7 @@ require('./account');
 require('./amenity');
 require('./analytics');
 require('./authenticate');
+require('./directives');
 require('./dropzone');
 require('./factories');
 require('./faq');

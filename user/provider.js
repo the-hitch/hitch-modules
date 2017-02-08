@@ -40,23 +40,26 @@ module.exports = function(ResourceProvider) {
                 if (provider.getCurrent(include)) {
 		    		deferred.resolve(provider.getCurrent(include));
 		    	} else if ($cookies.has('token')) {
-		    		return resource.get({
+		    		resource.get({
 		    			id: "me",
 		    			include: include
 		    		}, function(user) {
 		    			provider.setCurrent(user, include);
 
 		    			$rootScope.user = user;
+						
+						deferred.resolve(user);
 		    		}, function(e) {
 		    			console.log("Error: ", e);
-		    		}).$promise;
+			    		deferred.reject(null);
+		    		});
 		    	} else {
 		    		$rootScope.user = null;
 
 		    		deferred.reject(null);
 		    	}
 
-		    	return deferred.promise;
+		    	return deferred;
 		    }
 
 		    return resource;

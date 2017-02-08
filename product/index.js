@@ -3,3 +3,4 @@ angular.module('product', [
 ])
 
 .provider('Product', require('./provider'))
+.filter('product', require('./filter'))

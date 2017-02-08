@@ -7,6 +7,8 @@ module.exports = function(decorator) {
 			this.favorites = this.favorites.data.map(function(favorite) {
 				return new Vendor(favorite);
 			});
+		} else {
+			this.favorites = [];
 		}
 
 		if (this.vendors) {

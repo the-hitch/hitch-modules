@@ -21,6 +21,5 @@ module.exports = function(ResourceProvider) {
 
 		    return resource;
 		}
-
 	}
 }

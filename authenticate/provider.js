@@ -59,7 +59,7 @@ module.exports = function($injector) {
                     .then(function(response) {
                         $cookies.set('token', response.data.token, 'Infinity');
 
-                        User.current();
+                        // User.current();
 
                         deferred.resolve();                        
 	                }, function(response) {

@@ -24,8 +24,6 @@ module.exports = function(decorator) {
 			this.products = [];
 		}
 
-		this.vendors = [];
-
 		if (this.faqs) {
 			this.faqs = this.faqs.data.map(function(faq) {
 				return new Faq(faq);
@@ -43,11 +41,19 @@ module.exports = function(decorator) {
 		}
 
 		if (this.downloads) {
-			this.downloads = this.downloads.data.map(function(download) {
-				return new Link(download);
+			this.downloads = this.downloads.data.map(function(link) {
+				return new Link(link);
 			})
 		} else {
 			this.downloads = [];
+		}
+
+		if (this.vendors) {
+			this.vendors = this.vendors.data.map(function(link) {
+				return new Link(link);
+			})
+		} else {
+			this.vendors = [];
 		}
 
 		if (this.address) {
@@ -125,7 +131,7 @@ module.exports = function(decorator) {
 	}
 
 	vendor.prototype.transform = function($injector) {
-		delete this.data.created_at;
+		// delete this.data.created_at;
 
 		if (decorator && decorator.prototype.transform) {
 			return $injector.invoke(decorator.prototype.transform, this);
