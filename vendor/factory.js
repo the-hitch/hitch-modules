@@ -17,41 +17,61 @@ module.exports = function(decorator) {
 		}
 
 		if (this.products) {
+			var total = this.images.total;
+
 			this.products = this.products.data.map(function(product) {
 				return new Product(product);
-			})
+			});
+
+			this.products.total = total;
 		} else {
 			this.products = [];
 		}
-
+		
 		if (this.faqs) {
+			var total = this.faqs.total;
+
 			this.faqs = this.faqs.data.map(function(faq) {
 				return new Faq(faq);
-			})
+			});
+
+			this.faqs.total = total;
 		} else {
 			this.faqs = [];
 		}
 
-		if (this.links) {
-			this.links = this.links.data.map(function(link) {
+		if (this.examples) {
+			var total = this.examples.total;
+
+			this.examples = this.examples.data.map(function(link) {
 				return new Link(link);
-			})
+			});
+
+			this.examples.total = total;
 		} else {
-			this.links = [];
+			this.examples = [];
 		}
 
 		if (this.downloads) {
+			var total = this.downloads.total;
+			
 			this.downloads = this.downloads.data.map(function(link) {
 				return new Link(link);
-			})
+			});
+
+			this.downloads.total = total;
 		} else {
 			this.downloads = [];
 		}
 
 		if (this.vendors) {
+			var total = this.vendors.total;
+			
 			this.vendors = this.vendors.data.map(function(link) {
 				return new Link(link);
-			})
+			});
+
+			this.vendors.total = total;			
 		} else {
 			this.vendors = [];
 		}

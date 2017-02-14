@@ -27,6 +27,10 @@ module.exports = function(decorator) {
 		this.pretty = (function(product) {
 			if (product.pretty != undefined) return product.pretty;
 
+			if ( ! product.cost && ( ! product.cost_high && ! product.cost_low)) {
+				return null;
+			}
+
 			var str = "";
 
 			$filter('currency')(product.cost_low)
@@ -65,7 +69,7 @@ module.exports = function(decorator) {
 				}
 			}
 
-			if (product.per != 'single') {
+			if (product.per && product.per != 'single') {
 				str += "/" + product.per;
 			}
 

@@ -1,6 +1,6 @@
 module.exports = function(decorator) {
 
-	return function(Vendor) {
+	return function(Vendor, $injector) {
 		var moment = require('moment');
 
 		if (this.favorites) {
