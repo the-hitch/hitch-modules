@@ -4,6 +4,12 @@ module.exports = function(ResourceProvider) {
 
 		setHost: ResourceProvider.setApiUrl,
 
+		type: "CONSUMER",
+
+		setType: function(type) {
+			this.type = type;
+		},
+
 		decorate: function(decorator) {
 			this.decorator = decorator;
 		},
@@ -33,6 +39,10 @@ module.exports = function(ResourceProvider) {
 		    		}
 		    	}
 		    });
+
+		    resource.getType = function(include) {
+		    	return provider.type;
+		    }
 
 		    resource.current = function(include) {
                 var deferred = $q.defer();

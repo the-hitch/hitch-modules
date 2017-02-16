@@ -59,8 +59,6 @@ module.exports = function($injector) {
                     .then(function(response) {
                         $cookies.set('token', response.data.token, 'Infinity');
 
-                        // User.current();
-
                         deferred.resolve();                        
 	                }, function(response) {
                         deferred.reject(response.data);                            
@@ -75,6 +73,7 @@ module.exports = function($injector) {
                     $http({
                         method: 'POST',
                         data: {
+                            type: User.getType(),
                             name: data.name,
                             email: data.email,
                             password: data.password,
