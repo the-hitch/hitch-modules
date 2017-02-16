@@ -130,6 +130,7 @@ module.exports = function($injector) {
                         method: 'POST',
                         data: {
                             email: data.email,
+                            redirect_host: data.redirect_host || ''
                         },
                         url: config.api.host + "forgot"
                     }).then(function(response) {
