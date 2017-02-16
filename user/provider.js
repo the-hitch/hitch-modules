@@ -26,6 +26,10 @@ module.exports = function(ResourceProvider) {
 			return this.user[include];
 		},
 
+		clearCurrent: function() {
+			this.user = [];
+		},
+
 		$get: function(Resource, $cookies, $q, $rootScope) {
 			var provider = this;
 
@@ -42,6 +46,12 @@ module.exports = function(ResourceProvider) {
 
 		    resource.getType = function(include) {
 		    	return provider.type;
+		    }
+
+		    resource.clearCurrent = function() {
+				$rootScope.user = null;
+		    	
+		    	provider.clearCurrent();
 		    }
 
 		    resource.current = function(include) {

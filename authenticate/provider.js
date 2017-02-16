@@ -95,7 +95,7 @@ module.exports = function($injector) {
                 signout: function(data) {
                     $cookies.remove('token');
 
-                    $rootScope.user = null;
+                    User.clearCurrent()
                 },
 
                 refreshToken: function() {

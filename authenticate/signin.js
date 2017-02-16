@@ -19,12 +19,12 @@ module.exports = function(modal) {
 
 			$scope.openSignup = function() {
 				signin.reject();
-				signup.open();
+				signup.open().then(function(){}, function(){});
 			}
 
 			$scope.openForgot = function() {
 				signin.reject();
-				forgot.open();
+				forgot.open().then(function(){}, function(){});
 			}
 
 			$scope.submit = function() {

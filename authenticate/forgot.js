@@ -3,7 +3,7 @@ module.exports = function(modal) {
 		controller: function($scope, forgot, $state, Authenticate, User) {
 			$scope.loading = false;
 
-			$scope.user = new User();
+			$scope.user = new User({});
 
 			$state.params.forgot = true;
 

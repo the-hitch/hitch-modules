@@ -9,6 +9,7 @@ angular.module('authenticate', [
 .config(require('./intercepter'))
 
 .provider('Authenticate', require('./provider'))
-.factory('forgot', require('./forgot.js'))
-.factory('signin', require('./signin.js'))
-.factory('signup', require('./signup.js'))
+.factory('forgot', require('./forgot'))
+.factory('signin', require('./signin'))
+.factory('signup', require('./signup'))
+.factory('reset', require('./reset'))
