@@ -27,7 +27,7 @@ module.exports = function(decorator) {
 		this.pretty = (function(product) {
 			if (product.pretty != undefined) return product.pretty;
 
-			if ( ! product.cost && ( ! product.cost_high && ! product.cost_low)) {
+			if ( product.cost === null && (product.cost_high === null && product.cost_low === null)) {
 				return null;
 			}
 
@@ -98,7 +98,7 @@ module.exports = function(decorator) {
 			product.cost_low = range[0].replace(',', '');
 			product.cost_high = range[1].replace(',', '');
 		} else {
-			product.cost = range[0];
+			product.cost = range[0].replace(',', '');
 		}
 
 		if (per.length) {
@@ -111,11 +111,15 @@ module.exports = function(decorator) {
 			product.unit = '$';
 		} else if (product.pretty.indexOf('%') > -1) {
 			product.unit = '%';
+		} else {
+			product.unit = '$';
 		}
 
 		if (decorator && decorator.prototype.transform) {
 			return $injector.invoke(decorator.prototype.transform, product);
 		}
+
+		console.log(product);
 
 		return product;
 	}
