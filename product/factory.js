@@ -115,11 +115,11 @@ module.exports = function(decorator) {
 			product.unit = '$';
 		}
 
+		console.log(product);
+
 		if (decorator && decorator.prototype.transform) {
 			return $injector.invoke(decorator.prototype.transform, product);
 		}
-
-		console.log(product);
 
 		return product;
 	}
