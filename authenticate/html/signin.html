@@ -1,4 +1,4 @@
-<div class="modal ng-scope current" fix-scroller>
+<div class="modal current" fix-scroller>
     <div class="modal__backdrop" ng-click="close()"></div>
     <div class="modal__dialog">
 
@@ -8,15 +8,15 @@
     
             <div class="modal__header">
                 <div class="mobile__header mobile__header--chromeless">
-                    <a href="#" class="btn btn--cancel btn--transparent" ng-click="close()">Close</a>
+                    <a class="btn btn--cancel btn--transparent" ng-click="close()">Close</a>
                     <div class="mobile__header__title">Sign In</div>
-                    <a href="#" ng-click="submit()" class="btn btn--continue btn--transparent text--bluegreen">Sign In</a>
+                    <a ng-click="submit()" class="btn btn--continue btn--transparent text--bluegreen">Sign In</a>
                 </div>
             </div>
 
             <div class="modal__body">
                 <p class="modal__body__message" ng-class="{'error': error}" ng-bind-html="error"></p>
-                <form ng-submit="submit()" name="form" analytics-on analytics-event="Click" analytics-category="Consumer" analytics-label="Sign In Email" novalidate>
+                <form ng-submit="submit()" name="form" id="sign-in-form" novalidate>
                     <label>Email Address</label>
                     <div ng-if="form.$submitted" ng-messages="form.email.$error" role="alert">
                         <label ng-message="required">Valid Email Address required</label>

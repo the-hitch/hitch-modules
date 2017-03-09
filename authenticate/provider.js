@@ -82,8 +82,6 @@ module.exports = function($injector) {
                     }).then(function(response) {
                         $cookies.set('token', response.data.token, 'Infinity');
 
-                        User.current();
-
                         deferred.resolve();                        
                     }, function(response) {
                         deferred.reject(response.data);                            
@@ -105,6 +103,8 @@ module.exports = function($injector) {
                         method: 'POST',
                         url: config.api.host + refreshPath
                     }).then(function(response) {
+                        console.info("Response: " + response);
+
                         if (response.status == 200) {
                             $cookies.set('token', response.data.token, 'Infinity');
                             deferred.resolve();
@@ -117,6 +117,10 @@ module.exports = function($injector) {
                 },
 
                 isExpired: function() {
+                    if ( ! $cookies.has('token')) {
+                        return true;
+                    }
+
                     var encoded = $cookies.get('token').split('.')[1];
                     var jwt = JSON.parse(urlBase64Decode(encoded));
 

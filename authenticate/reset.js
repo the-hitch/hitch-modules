@@ -1,12 +1,10 @@
 module.exports = function(modal) {
 	return modal({
-		controller: function($scope, $state, reset, signin, Authenticate) {
+		controller: function($scope, $location, reset, signin, Authenticate) {
 			$scope.loading = false;
 
 			$scope.$on("$destroy", function() {
-				$state.params.remember_token = null;
-
-				$state.go($state.current.name, $state.params, {notify: false});
+				$location.search('remember_token', null)
 			});
 
 			$scope.close = function() {

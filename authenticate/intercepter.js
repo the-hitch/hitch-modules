@@ -42,7 +42,7 @@ module.exports = function($httpProvider) {
 
             return {
                 'request': function(config) {
-                    if ($cookies.has('token')) {
+                    if ($cookies.has('token') && $cookies.get('token') != 'undefined') {
 
                         if ($injector.get('Authenticate').isExpired() && config.url.indexOf("/authenticate/refresh") === -1) {
                             return refreshToken().then(function() {
@@ -73,16 +73,16 @@ module.exports = function($httpProvider) {
 
                     return response;
                 },
-                'responseError': function(response) {
-                    // This is not ideal because if it is on a non authentication (signin/sugnup) request
-                    // it will redirect the user to signin anyway.
-                    if (response.status == 401) {
-                        $cookies.remove('token');
-                        $location.path('/');
-                    }
+                // 'responseError': function(response) {
+                //     // This is not ideal because if it is on a non authentication (signin/sugnup) request
+                //     // it will redirect the user to signin anyway.
+                //     if (response.status == 401) {
+                //         $cookies.remove('token');
+                //         $location.path('/');
+                //     }
 
-                    return $q.reject(response);
-                }
+                //     return $q.reject(response);
+                // }
             }
         }
 	]

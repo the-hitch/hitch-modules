@@ -14,7 +14,7 @@
             <div class="modal__body">
                 <p class="modal__body__message" ng-class="{'error': error}" ng-bind-html="error"></p>
                 <form name="form" ng-submit="submit()" novalidate analytics-on analytics-event="Submit" analytics-category="Consumer" analytics-label="Sign Up Email">
-                    <label>Name</label>
+                    <label>Your Name</label>
                     <div ng-if="form.$submitted" ng-messages="form.name.$error" role="alert">
                         <label ng-message="required">Your Name is required</label>
                     </div>

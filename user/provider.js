@@ -54,10 +54,10 @@ module.exports = function(ResourceProvider) {
 		    	provider.clearCurrent();
 		    }
 
-		    resource.current = function(include) {
+		    resource.current = function(include, refresh) {
                 var deferred = $q.defer();
 
-                if (provider.getCurrent(include)) {
+                if ( ! refresh && provider.getCurrent(include)) {
 		    		deferred.resolve(provider.getCurrent(include));
 		    	} else if ($cookies.has('token')) {
 		    		resource.get({

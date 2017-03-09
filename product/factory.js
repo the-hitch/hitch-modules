@@ -86,6 +86,10 @@ module.exports = function(decorator) {
 	}
 
 	product.prototype.transform = function($injector) {
+		if ( ! this.pretty) {
+			return this;
+		}
+
 		var product = this;
 
 		var per = getMatches(product.pretty, /\/(.*)/g);
