@@ -1,6 +1,6 @@
 module.exports = function(modal) {
 	return modal({
-		controller: function($scope, $location, reset, signin, Authenticate) {
+		controller: function($scope, $state, $location, reset, signin, Authenticate) {
 			$scope.loading = false;
 
 			$scope.$on("$destroy", function() {
