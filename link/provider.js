@@ -11,7 +11,7 @@ module.exports = function(ResourceProvider) {
 		$get: function(Resource) {
 		    return Resource('link/:id', {
 		        id: '@id',
-		    }, require('./factory.js')(this.decorator));
+		    }, require('./factory.js')(this.decorator, ResourceProvider));
 		}
 	}
 }
