@@ -103,14 +103,16 @@ module.exports = function($injector) {
                         method: 'POST',
                         url: config.api.host + refreshPath
                     }).then(function(response) {
-                        console.info("Response: " + response);
-
                         if (response.status == 200) {
                             $cookies.set('token', response.data.token, 'Infinity');
                             deferred.resolve();
                         } else {
+                            $cookies.remove('token');
+                            
                             deferred.reject();                            
                         }
+                    }, function() {
+                        $cookies.remove('token');
                     })
 
                     return deferred.promise;

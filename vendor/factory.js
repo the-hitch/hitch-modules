@@ -17,11 +17,17 @@ module.exports = function(decorator) {
 		}
 
 		if (this.products) {
-			var total = this.images.total;
+			var total = this.products.total;
 
 			this.products = this.products.data.map(function(product) {
 				return new Product(product);
 			});
+
+			this.products.average = this.products.filter(function(product) {
+				return (product.title == "Average Wedding Cost");
+			});
+
+			this.products.average = (this.products.average.length ? this.products.average[0] : null);
 
 			this.products.total = total;
 		} else {
@@ -142,6 +148,8 @@ module.exports = function(decorator) {
 		}
 
 		delete this.meta;
+
+		this.excerpt = this.description.replace(/<\/?[^>]+(>|$)/g, "");
 
 		if (decorator) {
 			$injector.invoke(decorator, this);

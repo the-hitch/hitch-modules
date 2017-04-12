@@ -8,6 +8,7 @@ require('./directives');
 require('./dropzone');
 require('./factories');
 require('./faq');
+require('./featured');
 require('./filters');
 require('./image');
 require('./link');

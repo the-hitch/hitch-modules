@@ -1,8 +1,12 @@
-module.exports = function(btfModal, $q, $rootScope) {
+module.exports = function(btfModal, $q, $rootScope, $timeout) {
+	var notify = require('hungry-notify');
+
 	return function(options) {
         var deferred;
 
 		var modal = btfModal(options);
+
+		modal.notify = new notify();
 
 		modal.resolve = function(value) {
 			$rootScope.modal = false;
@@ -25,7 +29,11 @@ module.exports = function(btfModal, $q, $rootScope) {
 
 			deferred = $q.defer();
 
-			modal.activate(scope);
+			modal.activate(scope).then(function() {
+				$timeout(function() {
+					modal.notify.trigger('opened');
+				});
+			}, function() {});
 
 			return deferred.promise;
 		}

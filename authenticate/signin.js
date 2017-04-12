@@ -31,7 +31,7 @@ module.exports = function(modal) {
 				}
 
 				$scope.loading = true;
-	
+
 				Authenticate.signin($scope.user).then(function() {
 					$scope.loading = false;
 					signin.resolve();

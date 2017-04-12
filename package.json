@@ -16,5 +16,8 @@
     "hungry-notify": "^0.1.0",
     "hungry-resource": "1.0.2",
     "moment": "^2.17.1"
+  },
+  "devDependencies": {
+    "hungry-notify": "^0.1.0"
   }
 }
