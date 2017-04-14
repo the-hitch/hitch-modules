@@ -1,6 +1,6 @@
 module.exports = function(modal) {
 	return modal({
-		controller: function($scope, $state, $location, reset, signin, Authenticate) {
+		controller: function($scope, $state, $location, $timeout, reset, signin, Authenticate) {
 			$scope.loading = false;
 
 			$scope.$on("$destroy", function() {
@@ -12,8 +12,12 @@ module.exports = function(modal) {
 			}
 
 			$scope.signin = function() {
-				reset.resolve();	
-				signin.open();
+				reset.resolve();
+				signin.open().then(function() {
+					$timeout(function() {
+						$state.go('default.dashboard.index');
+					})
+				}, function() {});				
 			}
 
 			$scope.submit = function() {
