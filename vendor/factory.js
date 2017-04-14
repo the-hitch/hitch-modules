@@ -149,7 +149,7 @@ module.exports = function(decorator) {
 
 		delete this.meta;
 
-		this.excerpt = this.description.replace(/<\/?[^>]+(>|$)/g, "");
+		this.excerpt = (this.description || '').replace(/<\/?[^>]+(>|$)/g, "");
 
 		if (decorator) {
 			$injector.invoke(decorator, this);

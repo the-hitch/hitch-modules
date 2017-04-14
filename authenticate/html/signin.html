@@ -3,7 +3,7 @@
     <div class="modal__dialog">
 
         <div class="modal__content">
-            <loading class="loader" ng-if="loading"></loading>
+            <loadingdots ng-if="loading"></loadingdots>
             <i ng-click="close()" class="icon icon--delete"></i>
     
             <div class="modal__header">
@@ -33,13 +33,7 @@
                     </div>
                     <button type="submit" value="Sign In" tabindex="7" class="btn btn--black btn--full btn--large submit hidden--mini">Sign In</button>
                 </form>
-<!--                 <div class="social-login">
-                    <p class="text--center"><small class="social-login__header">or Log In With</small></p>
-                    <div class="container">
-                        <a class="btn btn--full btn--outline-dark btn--icon btn--facebook" ng-click="facebook()"><i class="icon icon--facebook" analytics-on analytics-event="Click" analytics-category="Consumer" analytics-label="Sign In Social"></i>Facebook</a>
-                    </div>
-                </div>
- -->            </div>
+            </div>
         </div>
     </div>
 </div>

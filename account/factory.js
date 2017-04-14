@@ -1,7 +1,7 @@
 module.exports = function(decorator) {
 	var moment = require('moment');
 
-	var account = function(User, Payment, $injector) {
+	var account = function(User, Payment, $injector, Vendor) {
 
 		this.users = (function(users) {
 			users = users.map(function(user) {
@@ -14,6 +14,12 @@ module.exports = function(decorator) {
 
 			return users;
 		})(this.users.data);
+
+		this.vendors = (function(vendors) {
+			return vendors.map(function(vendor) {
+				return new Vendor(vendor);
+			})
+		})(this.vendors ? this.vendors.data : [])
 
 		this.payment = (this.payment ? new Payment(this.payment.data) : null);
 

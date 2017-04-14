@@ -1,0 +1,145 @@
+/* $loadingdots
+ ------------------------------------------*/
+
+loadingdots {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  .dot {
+    @animation-speed: 1000ms;
+    @dot-size: 10px;
+    width: @dot-size;
+    height: @dot-size;
+    border: (@dot-size / 5) solid @red;
+    border-radius: 50%;
+    float: left;
+    margin: 0 (@dot-size / 2);
+    transform: scale(0);
+    .animation();
+    &:nth-child(2) {
+      .animation(@animation-speed * 0.3);
+    }
+    &:nth-child(3) {
+      .animation(@animation-speed * 0.6);
+    }
+  }
+
+  .animation(@delay: 0ms) {
+    animation: fx @animation-speed ease infinite @delay;
+  }
+
+  @keyframes fx {
+    50% {
+      transform: scale(1);
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+}
+
+/* $loadingbar
+ ------------------------------------------*/
+
+@-webkit-keyframes progress-bar {
+  0% {
+    width: 0;
+  }
+  33% {
+    width: 100%;
+  }
+  66% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+    width: 100%;
+    .transform-origin(right);
+  }
+  100% {
+    -webkit-transform: translateX(100%);
+    transform: translateX(100%);
+    .transform-origin(right);
+  }
+}
+
+@keyframes progress-bar {
+  0% {
+    width: 0;
+  }
+  33% {
+    width: 100%;
+  }
+  66% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+    width: 100%;
+    .transform-origin(right);
+  }
+  100% {
+    -webkit-transform: translateX(100%);
+    transform: translateX(100%);
+    .transform-origin(right);
+  }
+}
+
+loadingbar {
+  position: fixed;
+  width: 100%;
+  overflow: hidden;
+  top: 0;
+  z-index: 9999;
+  height: 3px;
+  background: fade(@green, 20%);
+  display: none;
+
+  &.show {
+    display: block;
+  }
+}
+
+loadingbar::before {
+  content: '';
+  background-color: @green;
+  display: block;
+  .square(100%);
+  -webkit-animation: progress-bar 1.5s infinite;
+  animation: progress-bar 1.5s infinite;
+  .transition-delay(400ms);
+}
+
+/* $progressbar
+ ------------------------------------------*/
+
+.progress-bar {
+  height: 8px;
+  position: relative;
+  background: @charcoal-gray;
+  border-radius: 3rem;
+  padding: 0;
+}
+
+.progress-bar .progress {
+  display: block;
+  height: 100%;
+  background: @green;
+  position: absolute;
+  top: 0;
+  left: -2px;
+  border-radius: 5rem;
+}
+
+.progress-bar--uploader {
+    margin: 100px 20px;
+}
+
+@-webkit-keyframes grow {
+    0% { width: 0 }
+    100% { width: 100% }
+}
+
+@keyframes grow {
+    0% { width: 0 }
+    100% { width: 100% }
+}

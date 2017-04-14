@@ -3,13 +3,10 @@ module.exports = function(modal) {
 		controller: function($scope, $state, signin, signup, forgot, Authenticate, User) {
 			$scope.loading = false;
 			
-			$state.go('.', { signin: true }, { notify: false })
-
-			$scope.$on("$destroy", function() {
-				$state.go('.', { signin: null }, { notify: false })
-			})
+			$state.go('.', { signin: true })
 
 			$scope.close = function() {
+				$state.go('.', { signin: null })
 				signin.reject();
 			}
 

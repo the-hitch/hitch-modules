@@ -22,3 +22,4 @@ require('./services');
 require('./sortable');
 require('./user');
 require('./vendor');
+require('./ui');
