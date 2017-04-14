@@ -1,14 +1,16 @@
 module.exports = function(modal) {
 	return modal({
-		controller: function($scope, forgot, $location, Authenticate, User) {
+		controller: function($scope, forgot, $state, $location, Authenticate, User) {
 			$scope.loading = false;
+
+			console.log("Forgot")
 
 			$scope.user = new User({});
 
-			$location.search('forgot', 'true')
+			$state.go('.', { forgot: true })
 
 			$scope.$on("$destroy", function() {
-				$location.search('forgot', null)
+				$state.go('.', { forgot: null })
 			})
 
 			$scope.close = function() {

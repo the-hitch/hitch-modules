@@ -1,14 +1,17 @@
 module.exports = function(modal) {
 	return modal({
-		controller: function($scope, $state, signin, signup, forgot, Authenticate, User) {
+		controller: function($scope, $state, $location, signin, signup, forgot, Authenticate, User) {
 			$scope.loading = false;
 			
 			$state.go('.', { signin: true })
 
 			$scope.close = function() {
-				$state.go('.', { signin: null })
 				signin.reject();
 			}
+
+			$scope.$on("$destroy", function() {
+				$state.go('.', { signin: null })
+			})
 
 			$scope.openSignup = function() {
 				signin.reject();

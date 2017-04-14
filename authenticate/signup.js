@@ -3,10 +3,10 @@ module.exports = function(modal) {
 		controller: function($scope, $state, signup, signin, Authenticate, User) {
 			$scope.loading = false;
 
-			$state.go('.', { signup: true }, { notify: false })
+			$state.go('.', { signup: true })
 
 			$scope.$on("$destroy", function() {
-				$state.go('.', { signup: null }, { notify: false })
+				$state.go('.', { signup: null })
 			})
 
 			$scope.close = function() {
@@ -15,7 +15,7 @@ module.exports = function(modal) {
 
 			$scope.openSignin = function() {
 				signup.reject();
-				signin.open();
+				signin.open().then(function(){}, function(){});
 			}
 
 			$scope.submit = function() {

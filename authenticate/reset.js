@@ -4,7 +4,7 @@ module.exports = function(modal) {
 			$scope.loading = false;
 
 			$scope.$on("$destroy", function() {
-				$location.search('remember_token', null)
+				$state.go('.', { remember_token: null })
 			});
 
 			$scope.close = function() {
