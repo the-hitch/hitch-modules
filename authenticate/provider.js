@@ -141,8 +141,8 @@ module.exports = function($injector) {
                         url: config.api.host + "forgot"
                     }).then(function(response) {
                         deferred.resolve();
-                    }, function() {
-                        deferred.reject();                        
+                    }, function(error) {
+                        deferred.reject(error.data);                        
                     })
 
                     return deferred.promise;

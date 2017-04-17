@@ -23,7 +23,9 @@ module.exports = function(modal) {
 				Authenticate.forgot($scope.user).then(function() {
 					$scope.loading = false;
 					$scope.success = true;				
-				}, function() {
+				}, function(e) {
+					$scope.error = e.error.email[0];
+
 					$scope.loading = false;
 				});
 			}

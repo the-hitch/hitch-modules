@@ -15,7 +15,7 @@
             <div class="modal__body" ng-if="!success">
                 <p class="modal__body__message">Start by entering your email address below.</p>
 
-                <p class="modal__body__message" ng-class="{'error': error}" ng-bind-html="message"></p>
+                <p class="modal__body__message" ng-class="{'error': error}" ng-bind-html="error"></p>
                 <form ng-submit="submit()" name="form" novalidate>
                     <label>Email</label>
                     <input type="email" name="email" class="form-control" ng-model="user.email" required>
