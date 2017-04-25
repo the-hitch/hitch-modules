@@ -11,5 +11,4 @@ angular.module('authenticate', [
 .provider('Authenticate', require('./provider'))
 .factory('forgot', require('./forgot'))
 .factory('signin', require('./signin'))
-.factory('signup', require('./signup'))
 .factory('reset', require('./reset'))

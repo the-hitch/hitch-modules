@@ -8,6 +8,7 @@ angular.module('vendor', [
 	'link',
 	'message',
 	'product',
+	'plan',
 	'region',
 	'user',
 ])

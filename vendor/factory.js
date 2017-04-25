@@ -1,7 +1,7 @@
 module.exports = function(decorator) {
 	var moment = require('moment');
 
-	var vendor = function(Account, Amenity, Image, Message, Product, Region, Link, User, Vendor, Faq, $injector) {
+	var vendor = function(Account, Amenity, Image, Message, Product, Region, Link, User, Vendor, Faq, Plan, $injector) {
 		this.created_at = new moment(this.created_at);
 
 		if (this.nearby) {
@@ -34,6 +34,12 @@ module.exports = function(decorator) {
 			this.products = [];
 		}
 		
+		if (this.plan) {
+			this.plan = this.plan.data.map(function(plan) {
+				return new Plan(plan);
+			})
+		}
+
 		if (this.faqs) {
 			var total = this.faqs.total;
 

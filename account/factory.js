@@ -13,7 +13,7 @@ module.exports = function(decorator) {
 			});
 
 			return users;
-		})(this.users.data);
+		})(this.users ? this.users.data : []);
 
 		this.vendors = (function(vendors) {
 			return vendors.map(function(vendor) {

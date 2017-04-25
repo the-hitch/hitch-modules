@@ -12,7 +12,7 @@ loadingdots {
     @dot-size: 10px;
     width: @dot-size;
     height: @dot-size;
-    border: (@dot-size / 5) solid @red;
+    border: (@dot-size / 5) solid @color-danger;
     border-radius: 50%;
     float: left;
     margin: 0 (@dot-size / 2);
@@ -91,7 +91,7 @@ loadingbar {
   top: 0;
   z-index: 9999;
   height: 3px;
-  background: fade(@green, 20%);
+  background: fade(@color-success, 20%);
   display: none;
 
   &.show {
@@ -101,7 +101,7 @@ loadingbar {
 
 loadingbar::before {
   content: '';
-  background-color: @green;
+  background-color: @color-success;
   display: block;
   .square(100%);
   -webkit-animation: progress-bar 1.5s infinite;
@@ -115,7 +115,7 @@ loadingbar::before {
 .progress-bar {
   height: 8px;
   position: relative;
-  background: @charcoal-gray;
+  background: @color-master-light;
   border-radius: 3rem;
   padding: 0;
 }
@@ -123,7 +123,7 @@ loadingbar::before {
 .progress-bar .progress {
   display: block;
   height: 100%;
-  background: @green;
+  background: @color-success;
   position: absolute;
   top: 0;
   left: -2px;
