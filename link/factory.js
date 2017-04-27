@@ -1,19 +1,18 @@
 module.exports = function(decorator, ResourceProvider) {
 
-	var link = function($injector, $q, $cookies, Authenticate, Link) {
+	var link = function($injector, $q, $cookies, Authenticate, Link, Loader) {
+
+        var _link = this;
 
 		this.title = this.title || '';
 
-        this.upload = function(file, title) {
+        this.upload = function(file) {
+            var loading = new Loader();
             var deferred = $q.defer();
             var request = new XMLHttpRequest();
             var data = new FormData();
 
             data.append('file', file);
-            
-            if (title) {
-                data.append('title', title);
-            }
 
             request.upload.addEventListener("progress", function(evt) {
                 deferred.notify({
@@ -23,6 +22,11 @@ module.exports = function(decorator, ResourceProvider) {
 
             request.onload = function() {
                 var download = new Link(angular.fromJson(this.response).data)
+
+                _link.url = download.url;
+
+                loading.stop();
+
                 deferred.resolve(download);
             }
 
