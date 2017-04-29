@@ -1,7 +1,9 @@
 require('angular-animate');
+require('angular-modal');
 
 angular.module('hitch.ui', [
 	'ngAnimate',
+	'btford.modal',
 	'ui.router'
 ])
 
@@ -14,3 +16,6 @@ angular.module('hitch.ui', [
 
 .filter('asset', require('./filters/asset'))
 .filter('trust', require('./filters/trust'))
+.filter('words', require('./filters/words'))
+
+.factory('modal', require('./factories/modal'))

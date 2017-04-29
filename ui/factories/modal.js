@@ -25,8 +25,6 @@ module.exports = function(btfModal, $q, $rootScope, $timeout) {
 		}
 
 		modal.open = function(scope) {
-			$rootScope.modal = true;
-
 			deferred = $q.defer();
 
 			modal.activate(scope).then(function() {
@@ -34,6 +32,8 @@ module.exports = function(btfModal, $q, $rootScope, $timeout) {
 					modal.notify.trigger('opened');
 				});
 			}, function() {});
+			
+			$rootScope.modal = true;
 
 			return deferred.promise;
 		}

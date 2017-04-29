@@ -5,7 +5,6 @@ require('./amenity');
 require('./analytics');
 require('./authenticate');
 require('./dropzone');
-require('./factories');
 require('./faq');
 require('./featured');
 require('./image');

@@ -35,9 +35,7 @@ module.exports = function(decorator) {
 		}
 		
 		if (this.plan) {
-			this.plan = this.plan.data.map(function(plan) {
-				return new Plan(plan);
-			})
+			this.plan = new Plan(this.plan.data);
 		}
 
 		if (this.faqs) {
