@@ -40,8 +40,12 @@ module.exports = function($animate, dropzone) {
 
                 $scope.$evalAsync(function() {
                     controller.previews.splice(toPosition, 0, controller.previews.splice(fromPosition, 1)[0]);
+    
+                    for (var i = 0; i < controller.previews.length; i++) {
+                        controller.previews[i].order = i;
+                    }
                 });
-            });
+             });
         }
     }
 }

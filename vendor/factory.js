@@ -1,7 +1,7 @@
 module.exports = function(decorator) {
 	var moment = require('moment');
 
-	var vendor = function(Account, Amenity, Image, Message, Product, Region, Link, User, Vendor, Faq, Plan, $injector) {
+	var vendor = function(Account, Amenity, Image, Product, Region, Link, User, Vendor, Faq, Subscription, $injector) {
 		this.created_at = new moment(this.created_at);
 
 		if (this.nearby) {
@@ -34,8 +34,8 @@ module.exports = function(decorator) {
 			this.products = [];
 		}
 		
-		if (this.plan) {
-			this.plan = new Plan(this.plan.data);
+		if (this.subscription) {
+			this.subscription = new Subscription(this.subscription.data);
 		}
 
 		if (this.faqs) {
@@ -142,14 +142,6 @@ module.exports = function(decorator) {
 			this.images.total = total;
 		} else {
 			this.images = [];
-		}
-
-		if (this.messages) {
-			this.messages = (function(messages) {
-				return messages.map(function(message) {
-					return new Message(message);
-				});
-			})(this.messages.data);
 		}
 
 		delete this.meta;

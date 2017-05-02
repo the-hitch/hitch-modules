@@ -1,8 +1,8 @@
-module.exports = function(decorate) {
+module.exports = function(decorator) {
 	var moment = require('moment');
 	var notify = require('hungry-notify');
 
-	return function(Vendor, User) {
+	return function($injector, Vendor, User) {
 		var thread = this;
 
 		this.notify = new notify();
@@ -25,8 +25,8 @@ module.exports = function(decorate) {
 
 		this.created_at = moment.utc(this.created_at);
 
-		if (decorate) {
-			angular.decorate(this, decorate(this))	
+		if (decorator) {
+			$injector.invoke(decorator, this);
 		}
 
 		return this;

@@ -53,6 +53,7 @@ module.exports = function($scope, $animate, $timeout, dropzone) {
                             size: function() {
                                 return evt.target.result;
                             },
+                            url: evt.target.result,
                             draggable: "false",
                             valid: valid,
                             loading: true

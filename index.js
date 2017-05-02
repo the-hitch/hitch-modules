@@ -18,6 +18,7 @@ require('./providers');
 require('./region');
 require('./services');
 require('./sortable');
+require('./subscription');
 require('./user');
 require('./vendor');
 require('./ui');
