@@ -10,6 +10,7 @@ require('./featured');
 require('./image');
 require('./link');
 require('./message');
+require('./messageThread');
 require('./payment');
 require('./post');
 require('./plan');

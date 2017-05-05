@@ -6,7 +6,7 @@ angular.module('vendor', [
 	'hgResource',
 	'image',
 	'link',
-	'message',
+	'messageThread',
 	'product',
 	'subscription',
 	'region',
