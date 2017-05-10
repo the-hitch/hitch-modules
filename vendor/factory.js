@@ -3,6 +3,7 @@ module.exports = function(decorator) {
 
 	var vendor = function(Account, Amenity, Image, Message, Product, Region, Link, User, Vendor, Faq, $injector) {
 		this.created_at = new moment(this.created_at);
+		this.updated_at = new moment(this.updated_at);
 
 		if (this.nearby) {
 			this.nearby = this.nearby.data.map(function(vendor) {
