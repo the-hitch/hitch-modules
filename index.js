@@ -1,3 +1,4 @@
+require('hungry-angular-cookies')
 require('hungry-resource');
 require('cookies');
 require('./account');
