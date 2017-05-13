@@ -72,12 +72,7 @@ module.exports = function($injector) {
 
                     $http({
                         method: 'POST',
-                        data: {
-                            type: User.getType(),
-                            name: data.name,
-                            email: data.email,
-                            password: data.password,
-                        },
+                        data: data,
                         url: config.api.host + 'signup'
                     }).then(function(response) {
                         $cookies.set('token', response.data.token, 'Infinity');

@@ -1,6 +1,6 @@
 module.exports = function($scope, $animate, $timeout, dropzone) {
 
-    var _self = this;
+    var ctrl = this;
 
     this.setConfig = function(key, value) {
         this[key] = value;
@@ -25,11 +25,9 @@ module.exports = function($scope, $animate, $timeout, dropzone) {
                 $animate.addClass(element, 'active')
             });
         } else {
-            $timeout(function() {
-                $scope.$evalAsync(function() {
-                    $animate.removeClass(element, 'active')
-                });
-            }, 1000);
+            $scope.$evalAsync(function() {
+                $animate.removeClass(element, 'active')
+            });
         }
     }
 
@@ -46,6 +44,7 @@ module.exports = function($scope, $animate, $timeout, dropzone) {
             (function(file) {
                 reader = new FileReader();
                 reader.onload = function(evt) {
+
                     var image = document.createElement('img');
                     var valid = true;
                     
@@ -54,20 +53,16 @@ module.exports = function($scope, $animate, $timeout, dropzone) {
                             size: function() {
                                 return evt.target.result;
                             },
+                            url: evt.target.result,
                             draggable: "false",
                             valid: valid,
                             loading: true
                         }
 
-                        if (image.width < parseInt(_self.minWidth) || image.height < parseInt(_self.minHeight)) {
-                            preview.error = "This photo is too small! Photos must be at least " + _self.minWidth + "px wide and " + _self.minHeight + "px tall.";
-                            preview.loading = false;
-                        }
-
-                        if (file.size > 20000000) {
-                            preview.error = "Too Large";
-                            preview.loading = false;
-                            console.error("File too large. Throw error");
+                        if (image.width < parseInt(ctrl.minWidth) || image.height < parseInt(ctrl.minHeight)) {
+                            preview.error = "Photos must be at least " + ctrl.minWidth + "px wide and " + ctrl.minHeight + "px tall.";
+                        } else if (file.size > 20000000) {
+                            preview.error = "Photos must be under 20MB.";
                         }
 
                         $scope.$evalAsync(function() {
@@ -75,19 +70,21 @@ module.exports = function($scope, $animate, $timeout, dropzone) {
                         })
 
                         if ( ! preview.error) {
-                            _self.upload({ file: file, preview: preview }).then(function() {
+                            ctrl.upload({ file: file, preview: preview }).then(function() {
                                 preview.loading = false;
                             }, function() {
                                 // error
                             }, function(data) {
                                 preview.completed = data.complete * 100;
                             })
-                        }
 
-                        if ($scope.previews.length > 1) {
-                            for (var i = 0; i < $scope.previews.length; i++) {
-                                $scope.previews[i].draggable = "true";
-                            };
+                            if ($scope.previews.length > 1) {
+                                for (var i = 0; i < $scope.previews.length; i++) {
+                                    $scope.previews[i].draggable = "true";
+                                };
+                            }
+                        } else {
+                            preview.loading = false;
                         }
                     })
                     image.src = evt.target.result;

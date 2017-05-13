@@ -14,8 +14,7 @@ module.exports = function(Product) {
 		restrict: 'A',
 		require: 'ngModel',
 		link: function(scope, element, attrs, ngModel) {
-
-			ngModel.$parsers.unshift(function(input) {
+			scope.$watch(attrs.ngModel, function(input) {
 				var per = getMatches(input, /\/(.*)/g);
 
 				var range = getMatches(input, /([0-9,]+)/g);
@@ -52,8 +51,6 @@ module.exports = function(Product) {
 				});
 
 				ngModel.$setValidity('valid-product', (product.pretty !== null) && /^[0-9,\-\s\$%]+(\/.*)*$/.test(input) );
-
-				return product.pretty;
 			});
 		}
 	}

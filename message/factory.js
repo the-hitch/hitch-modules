@@ -1,20 +1,18 @@
-module.exports = function(extend) {
+module.exports = function(decorator) {
 	var moment = require('moment');
 
-	return function(Vendor, User) {
-		if (extend) {
-			angular.extend(this, extend(this))	
+	return function($injector, User) {
+		this.created_at = moment.utc(this.created_at);
+		
+		if (this.user) {
+			if (this.user.data) {
+				this.user = new User(this.user.data);
+			}
 		}
 
-		this.messages = (function(messages) {
-			return messages.map(function(message) {
-				message.user = new User(message.user.data);
-
-				return message;
-			});
-		})(this.messages.data)
-
-		this.created_at = new moment(this.created_at);
+		if (decorator) {
+			$injector.invoke(decorator, this);
+		}
 
 		return this;
 	}

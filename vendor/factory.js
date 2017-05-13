@@ -1,7 +1,7 @@
 module.exports = function(decorator) {
 	var moment = require('moment');
 
-	var vendor = function(Account, Amenity, Image, Message, Product, Region, Link, User, Vendor, Faq, $injector) {
+	var vendor = function(Account, Amenity, Image, Product, Region, Link, User, Vendor, Faq, Subscription, $injector) {
 		this.created_at = new moment(this.created_at);
 		this.updated_at = new moment(this.updated_at);
 
@@ -35,6 +35,10 @@ module.exports = function(decorator) {
 			this.products = [];
 		}
 		
+		if (this.subscription) {
+			this.subscription = new Subscription(this.subscription.data);
+		}
+
 		if (this.faqs) {
 			var total = this.faqs.total;
 
@@ -103,6 +107,7 @@ module.exports = function(decorator) {
 
 		if (this.meta) {
 			this.capacity = this.meta.data.capacity || null;
+			this.terms = this.meta.data.terms || false;
 		}
 
 		if (this.account) {
@@ -140,14 +145,6 @@ module.exports = function(decorator) {
 			this.images = [];
 		}
 
-		if (this.messages) {
-			this.messages = (function(messages) {
-				return messages.map(function(message) {
-					return new Message(message);
-				});
-			})(this.messages.data);
-		}
-
 		delete this.meta;
 
 		this.excerpt = (this.description || '').replace(/<\/?[^>]+(>|$)/g, "");
@@ -160,7 +157,6 @@ module.exports = function(decorator) {
 	}
 
 	vendor.prototype.transform = function($injector) {
-		// delete this.data.created_at;
 
 		if (decorator && decorator.prototype.transform) {
 			return $injector.invoke(decorator.prototype.transform, this);

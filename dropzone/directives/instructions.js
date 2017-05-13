@@ -1,6 +1,6 @@
 module.exports = function() {
     return {
-        restrict: 'C',
+        restrict: 'A',
         require: '^dropzone',
         link: function($scope, $element, attrs, controller) {
             $scope.init = true;
