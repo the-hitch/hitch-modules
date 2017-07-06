@@ -106,7 +106,7 @@ module.exports = function(decorator) {
 		}
 
 		if (this.meta) {
-			this.capacity = this.meta.data.capacity || null;
+			this.capacity = parseInt(this.meta.data.capacity) || null;
 			this.terms = this.meta.data.terms || false;
 		}
 

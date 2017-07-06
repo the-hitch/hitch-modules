@@ -1,6 +1,6 @@
-angular.module('account', [
+angular.module('hitch.account', [
 	'hgResource',
-	'payment'
+	'hitch.payment'
 ])
 
 .provider('Account', ['ResourceProvider', require('./provider')])

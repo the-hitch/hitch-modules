@@ -1,4 +1,4 @@
-angular.module('faq', [
+angular.module('hitch.faq', [
 	'hgResource',
 ])
 

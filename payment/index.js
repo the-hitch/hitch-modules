@@ -1,4 +1,4 @@
-angular.module('payment', [
+angular.module('hitch.payment', [
 	'hgResource',
 ])
 

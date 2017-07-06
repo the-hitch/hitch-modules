@@ -1,4 +1,4 @@
-angular.module('post', [
+angular.module('hitch.post', [
 	'hgResource',
 ])
 

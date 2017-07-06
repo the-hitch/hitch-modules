@@ -1,4 +1,4 @@
-angular.module('analytics', [
+angular.module('hitch.analytics', [
 	'hgResource',
 ])
 

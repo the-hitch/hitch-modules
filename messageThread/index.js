@@ -1,8 +1,8 @@
-angular.module('messageThread', [
+angular.module('hitch.messageThread', [
 	'hgResource',
-	'message',
-	'vendor',
-	'user',
+	'hitch.message',
+	'hitch.vendor',
+	'hitch.user',
 ])
 
 .provider('MessageThread', ['ResourceProvider', require('./provider')])

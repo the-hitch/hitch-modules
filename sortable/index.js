@@ -1,4 +1,4 @@
-angular.module('sortable', [])
+angular.module('hitch.sortable', [])
 
 .directive('sortable', [function() {
 	return {

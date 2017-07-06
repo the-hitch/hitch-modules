@@ -1,7 +1,7 @@
-angular.module('message', [
+angular.module('hitch.message', [
 	'hgResource',
-	'vendor',
-	'user',
+	'hitch.vendor',
+	'hitch.user',
 ])
 
 .provider('Message', ['ResourceProvider', require('./provider')])

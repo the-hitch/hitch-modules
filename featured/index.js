@@ -1,4 +1,4 @@
-angular.module('featured', [
+angular.module('hitch.featured', [
 	'hgResource',
 ])
 

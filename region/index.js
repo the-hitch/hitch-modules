@@ -1,4 +1,4 @@
-angular.module('region', [
+angular.module('hitch.region', [
 	'hgResource',
 ])
 

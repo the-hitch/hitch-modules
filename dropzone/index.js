@@ -1,4 +1,4 @@
-angular.module('dropzone', [])
+angular.module('hitch.dropzone', [])
 
 .controller('DropzoneController', require('./controller'))
 .service('dropzone', [require('./service')])

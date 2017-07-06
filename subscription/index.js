@@ -1,4 +1,4 @@
-angular.module('subscription', [
+angular.module('hitch.subscription', [
 	'hgResource',
 ])
 

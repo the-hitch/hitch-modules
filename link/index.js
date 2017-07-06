@@ -1,4 +1,4 @@
-angular.module('link', [
+angular.module('hitch.link', [
 	'hgResource',
 ])
 

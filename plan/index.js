@@ -1,4 +1,4 @@
-angular.module('plan', [
+angular.module('hitch.plan', [
 	'hgResource',
 ])
 

@@ -1,6 +1,6 @@
 require('angular-messages')
 
-angular.module('authenticate', [
+angular.module('hitch.authenticate', [
 	'cookies',
 	'ngMessages',
 ])

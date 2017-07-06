@@ -1,4 +1,4 @@
-angular.module('image', [
+angular.module('hitch.image', [
 	'hgResource',
 ])
 

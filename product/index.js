@@ -1,4 +1,4 @@
-angular.module('product', [
+angular.module('hitch.product', [
 	'hgResource',
 ])
 
