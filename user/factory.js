@@ -1,6 +1,6 @@
 module.exports = function(decorator) {
 
-	return function(Vendor, Account, $injector) {
+	var user =  function(Vendor, Account, $injector) {
 		var moment = require('moment');
 
 		if (this.favorites) {
@@ -29,4 +29,6 @@ module.exports = function(decorator) {
 
 		return this;
 	}
+
+	return user;
 }

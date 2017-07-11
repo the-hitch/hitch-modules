@@ -38,10 +38,14 @@ module.exports = function(decorator) {
 		return this;
 	}
 
-	account.prototype.transform = function($injector) {
+	account.prototype.transform = function($q, $injector) {
+        var promises = [];
+
 		if (decorator && decorator.prototype.transform) {
-			return $injector.invoke(decorator.prototype.transform, this);
+			promises.push($injector.invoke(decorator.prototype.transform, this));
 		}
+
+        return $q.all(promises);
 	}	
 
 	return account;
