@@ -155,8 +155,8 @@ module.exports = function($injector) {
                         url: config.api.host + "reset"
                     }).then(function(response) {
                         deferred.resolve();
-                    }, function() {
-                        deferred.reject();
+                    }, function(error) {
+                        deferred.reject(error.data);
                     })
 
                     return deferred.promise;

@@ -8,6 +8,8 @@ module.exports = function(decorator) {
 		
 		this.subject = this.subject || "(no subject)";
 
+		this.vendor = new Vendor(this.vendor.data);
+
 		this.messages = (function(messages) {
 			return messages.map(function(message) {
 				if ( ! message.read) {

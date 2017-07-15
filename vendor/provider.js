@@ -15,7 +15,13 @@ module.exports = function(ResourceProvider) {
 		    	query: {
 		    		method: 'get',
 		    		isArray: true,
-		    		cancellable: true
+		    		cancellable: true,
+		    		cache: true
+		    	},
+		    	get: {
+		    		method: 'get',
+		    		isArray: false,
+		    		cache: true		    		
 		    	}
 		    });
 

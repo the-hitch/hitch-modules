@@ -8,8 +8,12 @@ module.exports = function(btfModal, $q, $rootScope, $timeout) {
 
 		modal.notify = new notify();
 
+		modal.opened = false;
+
 		modal.resolve = function(value) {
 			$rootScope.modal = false;
+			
+			modal.opened = false;
             
             deferred.resolve(value);
 			
@@ -18,6 +22,8 @@ module.exports = function(btfModal, $q, $rootScope, $timeout) {
 
 		modal.reject = function(value) {
 			$rootScope.modal = false;
+			
+			modal.opened = false;
             
             deferred.reject(value);
 			
@@ -26,6 +32,8 @@ module.exports = function(btfModal, $q, $rootScope, $timeout) {
 
 		modal.open = function(scope) {
 			deferred = $q.defer();
+
+			modal.opened = true;
 
 			modal.activate(scope).then(function() {
 				$timeout(function() {

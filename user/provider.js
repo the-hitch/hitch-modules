@@ -44,12 +44,16 @@ module.exports = function(ResourceProvider) {
 		    	}
 		    });
 
+		    resource.signedin = false;
+
 		    resource.getType = function(include) {
 		    	return provider.type;
 		    }
 
 		    resource.clearCurrent = function() {
-				$rootScope.user = null;
+				$rootScope.User = null;
+            
+            	resource.signedin = false;
 		    	
 		    	provider.clearCurrent();
 		    }
@@ -58,25 +62,33 @@ module.exports = function(ResourceProvider) {
                 var deferred = $q.defer();
 
                 if ( ! refresh && provider.getCurrent(include)) {
+                	resource.signedin = true;
+
 		    		deferred.resolve(provider.getCurrent(include));
 		    	} else if ($cookies.has('token')) {
 		    		resource.get({
 		    			id: "me",
 		    			include: include
 		    		}, function(user) {
+	                	resource.signedin = true;
+
 		    			provider.setCurrent(user, include);
 
-		    			$rootScope.user = user;
+		    			$rootScope.User = user;
 						
 						deferred.resolve(user);
 		    		}, function(e) {
+	                	resource.signedin = false;
+
 		    			console.log("Error: ", e);
-			    		deferred.reject(null);
+			    		deferred.resolve(null);
 		    		});
 		    	} else {
-		    		$rootScope.user = null;
+                	resource.signedin = false;
 
-		    		deferred.reject(null);
+		    		$rootScope.User = null;
+
+		    		deferred.resolve(null);
 		    	}
 
 		    	return deferred;

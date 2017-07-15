@@ -1,6 +1,6 @@
 module.exports = function(decorator) {
 
-	var user =  function(Vendor, Account, $injector) {
+	var user =  function(Vendor, Account, MessageThread, $injector) {
 		var moment = require('moment');
 
 		if (this.favorites) {
@@ -22,6 +22,14 @@ module.exports = function(decorator) {
 		}
 
 		this.created_at = new moment(this.created_at);
+
+        if (this.messages) {
+            this.messages = (function(messages) {
+                return messages.map(function(message) {
+                    return new MessageThread(message);
+                });
+            })(this.messages.data);
+        }
 
 		if (decorator) {
 			angular.extend(this, $injector.invoke(decorator, this));	
