@@ -37,10 +37,43 @@ module.exports = function($injector) {
     return {
 
         interceptors: interceptors,
+        
+        setFacebookAppid: function(appid) {
+            this.fbappid = appid;
+        },
 
         $get: function(config, $q, $cookies, $http, $state, $rootScope, $location, Resource, User) {
 
-            var refreshPath = "authenticate/refresh";
+            var refreshPath = "authenticate/refresh",
+                facebookStatus,
+                fbappid = this.fbappid;
+
+            if (fbappid) {
+                window.fbAsyncInit = function() {
+                    FB.init({
+                        appId: fbappid,
+                        autoLogAppEvents: true,
+                        xfbml: true,
+                        version: 'v2.9'
+                    });
+                    FB.AppEvents.logPageView();
+
+                    FB.getLoginStatus(function(response) {
+                        facebookStatus = response;
+                    });
+                };
+
+                (function(d, s, id) {
+                    var js, fjs = d.getElementsByTagName(s)[0];
+                    if (d.getElementById(id)) {
+                        return;
+                    }
+                    js = d.createElement(s);
+                    js.id = id;
+                    js.src = "//connect.facebook.net/en_US/sdk.js";
+                    fjs.parentNode.insertBefore(js, fjs);
+                }(document, 'script', 'facebook-jssdk'));
+            }
 
         	return {
                 refreshPath: refreshPath,
@@ -81,6 +114,45 @@ module.exports = function($injector) {
                     }, function(response) {
                         deferred.reject(response.data);                            
                     });
+
+                    return deferred.promise;
+                },
+
+                facebook: function(data) {
+                    var deferred = $q.defer();
+
+                    var makeRequest = function(token) {
+                        $http({
+                            method: 'POST',
+                            data: angular.extend({}, data, {
+                                token: token
+                            }),
+                            url: config.api.host + 'facebook'
+                        }).then(function(response) {
+                            $cookies.set('token', response.data.token, 'Infinity');
+
+                            deferred.resolve(response);                        
+                        }, function(response) {
+                            deferred.reject(response.data);                            
+                        });
+                    }
+
+                    if (facebookStatus.status == "connected") {
+                        makeRequest(facebookStatus.authResponse.accessToken);
+                    } else {
+                        FB.login(function(response) {
+                            if (response.status === 'connected') {
+                                FB.api('/me', {fields: 'id,picture,about,email,first_name,gender,last_name'}, function() {
+                                    makeRequest(response.authResponse.accessToken);
+                                });
+
+                            } else {
+                                // The person is not logged into this app or we are unable to tell. 
+                            }
+                        }, {
+                            scope: 'email'
+                        });
+                    }
 
                     return deferred.promise;
                 },
