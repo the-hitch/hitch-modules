@@ -49,7 +49,13 @@ module.exports = function($injector) {
                 fbappid = this.fbappid;
 
             if (fbappid) {
-                window.fbAsyncInit = function() {
+
+                var script = document.createElement('script');
+                script.type = 'text/javascript';
+                script.src = 'https://connect.facebook.net/en_US/sdk.js';
+                document.body.appendChild(script);
+
+                script.onload = function() {
                     FB.init({
                         appId: fbappid,
                         autoLogAppEvents: true,
@@ -64,17 +70,6 @@ module.exports = function($injector) {
                         facebookStatus = response;
                     });
                 };
-
-                (function(d, s, id) {
-                    var js, fjs = d.getElementsByTagName(s)[0];
-                    if (d.getElementById(id)) {
-                        return;
-                    }
-                    js = d.createElement(s);
-                    js.id = id;
-                    js.src = "https://connect.facebook.net/en_US/sdk.js";
-                    fjs.parentNode.insertBefore(js, fjs);
-                }(document, 'script', 'facebook-jssdk'));
             }
 
         	return {
