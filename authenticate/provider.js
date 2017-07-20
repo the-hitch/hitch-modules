@@ -58,6 +58,8 @@ module.exports = function($injector) {
                     });
                     FB.AppEvents.logPageView();
 
+                    console.log("Facebook Loaded");
+
                     FB.getLoginStatus(function(response) {
                         facebookStatus = response;
                     });
@@ -70,7 +72,7 @@ module.exports = function($injector) {
                     }
                     js = d.createElement(s);
                     js.id = id;
-                    js.src = "//connect.facebook.net/en_US/sdk.js";
+                    js.src = "https://connect.facebook.net/en_US/sdk.js";
                     fjs.parentNode.insertBefore(js, fjs);
                 }(document, 'script', 'facebook-jssdk'));
             }
