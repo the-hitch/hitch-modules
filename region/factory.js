@@ -24,7 +24,7 @@ module.exports = function(decorator) {
 		}
 
 		if (decorator) {
-			angular.extend(this, $injector.invoke(decorator, this));	
+			$injector.invoke(decorator, this);
 		}
 
 		return this;
