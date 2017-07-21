@@ -64,8 +64,6 @@ module.exports = function($injector) {
                     });
                     FB.AppEvents.logPageView();
 
-                    console.log("Facebook Loaded");
-
                     FB.getLoginStatus(function(response) {
                         facebookStatus = response;
                     });
