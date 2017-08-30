@@ -18,5 +18,7 @@
     "hungry-resource": "^1.1.2",
     "moment": "^2.18.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "angular-ui-router": "^1.0.3"
+  }
 }

@@ -1,7 +1,7 @@
 module.exports = function() {
 	var moment = require('moment');
 
-	var post = function(User, Image) {
+	var post = function(User, Image, Post) {
 
 		if (this.published_at) {
 			this.published_at = new moment(this.published_at);
@@ -16,6 +16,14 @@ module.exports = function() {
 			});
 		} else {
 			this.images = [];
+		}
+
+		if (this.next) {
+			this.next = new Post(this.next.data);
+		}
+
+		if (this.previous) {
+			this.previous = new Post(this.previous.data);
 		}
 
 		return this;
