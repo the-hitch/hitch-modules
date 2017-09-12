@@ -62,10 +62,12 @@ module.exports = function(ResourceProvider) {
                 var deferred = $q.defer();
 
                 if ( ! refresh && provider.getCurrent(include)) {
+                	console.log(1);
                 	resource.signedin = true;
 
 		    		deferred.resolve(provider.getCurrent(include));
 		    	} else if ($cookies.has('token')) {
+                	console.log(2);
 		    		resource.get({
 		    			id: "me",
 		    			include: include
@@ -84,6 +86,7 @@ module.exports = function(ResourceProvider) {
 			    		deferred.resolve(null);
 		    		});
 		    	} else {
+                	console.log(3);
                 	resource.signedin = false;
 
 		    		$rootScope.User = null;

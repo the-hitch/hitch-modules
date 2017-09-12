@@ -30,12 +30,11 @@ module.exports = function() {
 	}
 
 	post.prototype.transform = function() {
-		console.log(this);
 
-		if (this.data.published && this.data.published_at == null) {
-			this.data.published_at = new moment();
-		} else if ( ! this.data.published) {
-			this.data.published_at = null;
+		if (this.published && this.published_at == null) {
+			this.published_at = new moment().format('YYYY-MM-DD HH:mm:00');
+		} else if ( ! this.published) {
+			this.published_at = null;
 		}
 	}
 
